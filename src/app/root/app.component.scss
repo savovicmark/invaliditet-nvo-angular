@@ -1,0 +1,27 @@
+mat-sidenav-container, mat-sidenav-content, mat-sidenav {
+  height: 100%;
+}
+mat-sidenav{
+  width: 20%;
+  @media screen and (max-width: 599px) {
+    width: 70%;
+  }
+}
+fa-icon{
+  padding: 0px 10px;
+}
+#empty{
+  width: 100%;
+}
+mat-toolbar{
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100% !important;
+  z-index: 1000;
+}
+main{
+  margin-top: 60px;
+}
+
+

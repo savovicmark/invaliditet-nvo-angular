@@ -1,0 +1,55 @@
+<mat-toolbar color="primary">
+  <div fxHide.gt-xs>
+    <button mat-icon-button (click)="sidenav.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
+  <div fxFlex fxLayout fxLayoutAlign="end">
+    <fa-icon [icon]="faFacebook" size="lg"></fa-icon>
+    <fa-icon [icon]="faInstagram" size="lg"></fa-icon>
+    <fa-icon [icon]="faTwitter" size="lg"></fa-icon>
+    <fa-icon [icon]="faYoutube" size="lg"></fa-icon>
+  </div>
+</mat-toolbar>
+<mat-sidenav-container>
+  <mat-sidenav #sidenav role="navigation" fixedInViewport="true" fixedTopGap="59">
+    <mat-nav-list>
+      <mat-list-item>
+          <a [routerLink]="['/Naslovna']"  >Naslovna</a>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <app-nav-item
+      [title]="'O nama'" [links]="['Osnivaci', 'Unutrasnja organizacija', 'Tim', 'Mi Boke']">
+      </app-nav-item>
+      <mat-divider></mat-divider>
+      <app-nav-item
+      [title]="'Projekti'" [links]="['Projekti u realizaciji', 'Realizovani projekti']">
+      </app-nav-item>
+      <mat-divider></mat-divider>
+      <app-nav-item
+      [title]="'Dokumenti i publikacije'" [links]="['Opsta akta', 'Mi Boke', 'Planovi i izvjestaj o radu', 'Izdati materijal']">
+      </app-nav-item>
+      <mat-divider></mat-divider>
+      <mat-list-item>
+          <a [routerLink]="['/Partneri']">Partneri</a>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item>
+          <a [routerLink]="['/Donatori']">Donatori i sponzori</a>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <app-nav-item
+      [title]="'Admin'" [links]="['Svi korisnici', 'Dodaj korisnika']">
+      </app-nav-item>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <main>
+      <!--<app-korisnik ></app-korisnik>
+      <app-usluga-post></app-usluga-post>
+      <app-all-korisnik></app-all-korisnik>-->
+      <router-outlet></router-outlet>
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+

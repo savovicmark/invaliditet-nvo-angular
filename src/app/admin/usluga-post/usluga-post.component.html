@@ -1,0 +1,210 @@
+<section fxLayout fxLayoutAlign="center center">
+  <form fxFlex fxLayout="column" [formGroup]="uslugaForm" (ngSubmit)="submitUsluga()">
+      <mat-form-field>
+          <mat-label>
+            Da li korisnik obratio licno ili druga osoba u njegovo ime?
+          </mat-label>
+          <mat-select formControlName="koJePodnioZahtjev">
+            <mat-option>PONISTI IZBOR</mat-option>
+            <mat-option [value]="'korisnik'" >
+              KORISNIK/CA
+            </mat-option>
+            <mat-option [value]="'drugo'" >
+                DRUGA OSOBA ZA RACUN KORISNIKA/CE
+            </mat-option>
+          </mat-select>
+      </mat-form-field>
+      <div fxLayout="column" *ngIf="uslugaForm.get('koJePodnioZahtjev').value === 'drugo'"> <!--ovaj se div bit *ngIf-->
+          <mat-form-field>
+              <mat-label>
+                Ime osobe koja se obratila u ime korisnika
+              </mat-label>
+              <input type="text" matInput formControlName="imeKoJePodnioZahtjev">
+          </mat-form-field>
+          <mat-form-field>
+              <mat-label>
+                Prezime osobe koja se obratila u ime korisnika
+              </mat-label>
+              <input type="text" matInput formControlName="prezimeKoJePodnioZahtjev">
+          </mat-form-field>
+      </div>
+      <mat-form-field class="example-full-width">
+          <mat-label>
+            Datum obracanja
+          </mat-label>
+            <input matInput [matDatepicker]="picker1" [max]="today" formControlName="datumUpucivanjaZahtjeva">
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1 startView="year"></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field>
+          <mat-label>
+              Nacin na koji je upuceno pitanje
+          </mat-label>
+          <mat-select multiple="true" formControlName="kojimPutemJePodnijetZahtjev">
+            <mat-option>PONISTI IZBOR</mat-option>
+            <mat-option *ngFor="let obracanje of obracanja" [value]="obracanje" >
+              {{obracanje | uppercase}}
+            </mat-option>
+          </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>
+            Pitanje za koje je trazena pomoc
+        </mat-label>
+        <mat-select multiple="true" formControlName="pitanjeZaKojeJeTrazenaPomoc">
+          <mat-option *ngFor="let pitanje of pitanja" [value]="pitanje" >
+            {{pitanje | uppercase}}
+          </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-checkbox formControlName="dodajPitanje">
+      Dodaj novu opciju za "Pitanje za koje je trazena pomoc"???
+    </mat-checkbox>
+    <div fxLayout="column" *ngIf="uslugaForm.get('dodajPitanje').value"> <!--Odje ce ic ngIf-->
+      <mat-form-field>
+        <mat-label>
+          Naziv nove opcije za "Pitanje za koje je trazena pomoc"
+        </mat-label>
+        <input type="text" matInput formControlName="novoPitanje">
+      </mat-form-field>
+      <div>
+        <button type="button" mat-raised-button color="accent" (click)="dodajPitanje()">Dodaj Opciju</button>
+      </div>
+    </div>
+    <mat-form-field>
+      <mat-label>
+        Sazetak pitanja
+      </mat-label>
+      <textarea matInput cdkTextareaAutosize formControlName="sazetakPitanja"></textarea>
+    </mat-form-field>
+    <div>
+      <div fxLayout>
+        <button mat-icon-button><mat-icon>folder_open</mat-icon></button>
+        <p>Dostavljena dokumenta</p>
+      </div>
+      <div *ngFor="let dok of dokuments.controls; let i = index" formArrayName="dokumenta">
+        <div [formGroupName]="i" fxLayout="column">
+          <mat-form-field>
+            <mat-label>
+              Opis dokumenta
+            </mat-label>
+            <input type="text" matInput formControlName="opis">
+          </mat-form-field>
+           <input type="file" multiple="false" (change)="onFileSelect($event, i)">
+        </div>
+      </div>
+      <button mat-raised-button color="accent" type="button" (click)="pushDokument()">Dodaj dokument</button>
+    </div>
+    <mat-form-field class="example-full-width">
+      <mat-label>
+        Datum upucivanja odgovora/pruzanja pomoci
+      </mat-label>
+        <input matInput [matDatepicker]="picker2" [max]="today" formControlName="datumOdgovora">
+        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+        <mat-datepicker #picker2 startView="year"></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>
+        Da li je odgovor upucen korisniku licno ili drugoj osobi u njegovo ime?
+      </mat-label>
+      <mat-select formControlName="komeJeUpucenOdgovor">
+        <mat-option>PONISTI IZBOR</mat-option>
+        <mat-option [value]="'korisnik'" >
+          KORISNIK/CA
+        </mat-option>
+        <mat-option [value]="'drugo'" >
+          DRUGA OSOBA ZA RACUN KORISNIKA/CE
+        </mat-option>
+      </mat-select>
+  </mat-form-field>
+  <div fxLayout="column" *ngIf="uslugaForm.get('komeJeUpucenOdgovor').value === 'drugo'"> <!--ovaj se div bit *ngIf-->
+      <mat-form-field>
+          <mat-label>
+            Ime osobe kojoj je upucen odgovor
+          </mat-label>
+          <input type="text" matInput formControlName="imeKomeJeUpucenOdgovor">
+      </mat-form-field>
+      <mat-form-field>
+          <mat-label>
+            Prezime osobe kojoj je upucen odgovor
+          </mat-label>
+          <input type="text" matInput formControlName="prezimeKomeJeUpucenOdgovor">
+      </mat-form-field>
+  </div>
+  <mat-form-field>
+      <mat-label>
+          Nacin na koji je upucen odgovor
+      </mat-label>
+      <mat-select multiple="true" formControlName="kojimPutemJePruzenOdgovor">
+        <mat-option>PONISTI IZBOR</mat-option>
+        <mat-option *ngFor="let obracanje of obracanja" [value]="obracanje" >
+          {{obracanje | uppercase}}
+        </mat-option>
+      </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+      <mat-label>
+        Oblik pruzene pomoci
+      </mat-label>
+      <mat-select multiple="true" formControlName="oblikPruzenePomoci">
+        <mat-optgroup label="Besplatna pravna pomoc">
+            <mat-option *ngFor="let besp of bespPomoc" [value]="'Besplatna pravna pomoc - ' + besp" >
+                {{ besp | uppercase}}
+            </mat-option>
+        </mat-optgroup>
+        <mat-optgroup label="Usluge socijalne i djecje zastite">
+            <mat-option *ngFor="let soc of socZast " [value]="'Usluge socijalne i djecje zastite - ' + soc">
+                {{ soc | uppercase }}
+            </mat-option>
+        </mat-optgroup>
+      </mat-select>
+      <mat-hint>Mozete obiljeziti vise oblika pomoci</mat-hint>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>
+          Kratki opis pruzene pomoci
+        </mat-label>
+        <textarea matInput cdkTextareaAutosize formControlName="opisPruzenePomoci"></textarea>
+    </mat-form-field>
+    <div>
+        <div fxLayout>
+          <button mat-icon-button><mat-icon>folder_open</mat-icon></button>
+          <p>Pripremljena pravna akta</p>
+        </div>
+        <div *ngFor="let dok of pravnaAkta.controls; let i = index" formArrayName="pravnaAkta">
+          <div [formGroupName]="i" fxLayout="column">
+            <mat-form-field>
+              <mat-label>
+                Opis primpremljenog pravnog akta
+              </mat-label>
+              <input type="text" matInput formControlName="opis">
+            </mat-form-field>
+             <input type="file" multiple="false" (change)="onPravniAktSelect($event, i)">
+          </div>
+        </div>
+        <button mat-raised-button color="accent" type="button" (click)="pushPravniAkt()">Dodaj dokument</button>
+    </div>
+    <mat-form-field class="example-full-width">
+        <mat-label>
+          Datum novog obracanja / novog pitanja
+        </mat-label>
+          <input matInput [matDatepicker]="picker3" [max]="today"
+            formControlName="datumOdgovoraIliNovogObracanja">
+          <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+          <mat-datepicker #picker3 startView="year"></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>
+          Sazetak odgovora korisnika
+        </mat-label>
+        <textarea matInput cdkTextareaAutosize formControlName="sazetakOdgovora"></textarea>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>
+          Rezultat pruzene pomoci
+        </mat-label>
+        <textarea matInput cdkTextareaAutosize formControlName="rezultatPruzenePomoci"></textarea>
+    </mat-form-field>
+    <button mat-raised-button type="submit" color="primary">Submit</button>
+  </form>
+</section>

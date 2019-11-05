@@ -1,0 +1,222 @@
+<section fxLayout fxLayoutAlign="center center">
+  <form fxFlex fxLayout="column" [formGroup]="korisnikForm" (ngSubmit)="submitForm()">
+    <mat-form-field color="primary">
+      <mat-label>
+        Ime korisnika
+      </mat-label>
+      <input type="text" matInput formControlName="userName">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>
+            Prezime korisnika
+        </mat-label>
+        <input type="text" matInput formControlName="userLastName" >
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>
+        Starosna dob korisnika
+      </mat-label>
+      <mat-select formControlName="userAge">
+        <mat-option>PONISTI IZBOR</mat-option>
+        <mat-option *ngFor="let age of ages" [value]="age" >
+          {{age}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>
+            Mjesto rodjenja
+        </mat-label>
+        <input type="text" matInput formControlName="placeBirth" >
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>
+            Mjesto stanovanja
+        </mat-label>
+        <input type="text" matInput formControlName="placeLiving">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>
+            Adresa
+        </mat-label>
+        <input type="text" matInput formControlName="adress">
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <mat-label>
+        Datum rodjenja
+      </mat-label>
+        <input matInput [matDatepicker]="picker" [max]="today" formControlName="birthDate">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker startView="year"></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>
+          JMBG
+        </mat-label>
+        <input type="text" matInput formControlName="jmbg">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>
+          Email korisnika
+        </mat-label>
+        <input type="email" matInput formControlName="email">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>
+          Telefon
+        </mat-label>
+        <input type="tel" matInput formControlName="telephone">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>
+          Pol korisnika
+        </mat-label>
+        <mat-select formControlName="gender">
+          <mat-option>PONISTI IZBOR</mat-option>
+          <mat-option *ngFor="let gend of genders" [value]="gend" >
+            {{gend | uppercase}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+          <mat-label>
+            Invaliditet
+          </mat-label>
+          <mat-select multiple="true" formControlName="typeOfInvalidity">
+            <mat-option *ngFor="let invalidity of invalidities" [value]="invalidity" >
+              {{invalidity | uppercase}}
+            </mat-option>
+          </mat-select>
+          <mat-hint>Ako je u pitanju visestruki invaliditet, odaberite vise opcija</mat-hint>
+      </mat-form-field>
+      <mat-form-field>
+          <mat-label>
+            Dijagnoza
+          </mat-label>
+          <input type="text" matInput formControlName="diagnose">
+      </mat-form-field>
+      <mat-form-field>
+          <mat-label>
+            Poslovna sposobnost
+          </mat-label>
+          <mat-select formControlName="workCapability">
+            <mat-option>PONISTI IZBOR</mat-option>
+            <mat-option *ngFor="let cap of capability" [value]="cap" >
+              {{cap | uppercase}}
+            </mat-option>
+          </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+          <mat-label>
+            Obrazovanje
+          </mat-label>
+          <mat-select formControlName="educationLevel">
+            <mat-option>PONISTI IZBOR</mat-option>
+            <mat-option *ngFor="let education of educations" [value]="education" >
+              {{education | uppercase}}
+            </mat-option>
+          </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+          <mat-label>
+            Zanimanje
+          </mat-label>
+          <input type="text" matInput formControlName="profession">
+      </mat-form-field>
+      <mat-form-field>
+          <mat-label>
+            Zaposlenje
+          </mat-label>
+          <mat-select formControlName="employed">
+            <mat-option>PONISTI IZBOR</mat-option>
+            <mat-option *ngFor="let employment of employments" [value]="employment" >
+              {{employment | uppercase}}
+            </mat-option>
+          </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+          <mat-label>
+              Pripadnost jos nekoj marginalizovanoj grupi - navesti kojoj
+          </mat-label>
+          <input type="text" matInput formControlName="marginalGroup">
+      </mat-form-field>
+      <mat-form-field>
+          <mat-label>
+              Broj clanova domacinstva i srodstvo sa njima
+          </mat-label>
+          <input type="text" matInput formControlName="familyMembers">
+      </mat-form-field>
+      <mat-form-field>
+          <mat-label>
+            Stambeni status
+          </mat-label>
+          <mat-select multiple="true" formControlName="livingCondition">
+            <mat-optgroup label="Stambeni status">
+                <mat-option *ngFor="let condition of livingConditions" [value]="condition" >
+                    {{condition | uppercase}}
+                </mat-option>
+            </mat-optgroup>
+            <mat-optgroup label="Uslovnost smjestaja">
+                <mat-option [value]="'uslovno'">
+                    USLOVNO ZA STANOVANJE
+                </mat-option>
+                <mat-option [value]="'neuslovno'">
+                    NEUSLOVNO ZA STANOVANJE
+                </mat-option>
+            </mat-optgroup>
+          </mat-select>
+          <mat-hint>Obiljezite po jedno polje za stambeni status i uslove stanovanja</mat-hint>
+      </mat-form-field>
+      <mat-checkbox formControlName="checkedForm">
+        Da li se za pomoc u ime korisnika obratilo trece lice???
+      </mat-checkbox>
+      <mat-divider></mat-divider>
+<!--================================================================================================-->
+      <div [@enterAnimation] fxLayout="column" *ngIf="korisnikForm.get('checkedForm').value" formGroupName="zahtjevaoc">
+        <p>Licni podaci o osobi koja se obratila za racun korisnika/ce</p>
+        <mat-form-field >
+            <mat-label>
+              Ime
+            </mat-label>
+            <input type="text" matInput formControlName="imeZahtjevaoca">
+          </mat-form-field>
+          <mat-form-field >
+              <mat-label>
+                Prezime
+              </mat-label>
+              <input type="text" matInput formControlName="prezimeZahtjevaoca">
+          </mat-form-field>
+          <mat-form-field >
+              <mat-label>
+                Adresa
+              </mat-label>
+              <input type="text" matInput formControlName="adresaZahtjevaoca">
+          </mat-form-field>
+          <mat-form-field >
+              <mat-label>
+                Telefonski broj
+              </mat-label>
+              <input type="tel" matInput formControlName="adresaZahtjevaoca">
+          </mat-form-field>
+          <mat-form-field>
+              <mat-label>
+                Srodstvo sa korisnikom
+              </mat-label>
+              <mat-select multiple="true" formControlName="odnosSaKorisnikom">
+                <mat-optgroup label="Clan/ica porodice">
+                    <mat-option *ngFor="let member of family" [value]="member" >
+                        {{member | uppercase}}
+                    </mat-option>
+                </mat-optgroup>
+                <mat-optgroup label="Ostalo">
+                    <mat-option *ngFor="let other of others" [value]="other" >
+                        {{other | uppercase}}
+                    </mat-option>
+                </mat-optgroup>
+              </mat-select>
+              <mat-hint>Mozete obiljeziti vise polja</mat-hint>
+          </mat-form-field>
+      </div>
+      <button mat-raised-button type="submit" color="primary">Submit</button>
+  </form>
+</section>

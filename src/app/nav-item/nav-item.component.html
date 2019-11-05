@@ -1,0 +1,12 @@
+<mat-list-item (click)="toggleDropdown()">
+  <p mat-list-item fxFlex >{{title}}</p>
+  <button mat-icon-button >
+    <mat-icon>{{icon}}</mat-icon>
+  </button>
+</mat-list-item>
+<mat-nav-list [@enterAnimation] *ngIf="!hide">
+  <ng-container *ngFor="let link of links">
+      <a [routerLink]="['/', title, link]"   mat-list-item >{{link}}</a>
+      <mat-divider [inset]="true"></mat-divider>
+  </ng-container>
+</mat-nav-list>

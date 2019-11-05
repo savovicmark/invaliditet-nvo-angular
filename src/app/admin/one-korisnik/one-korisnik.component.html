@@ -1,0 +1,92 @@
+<section>
+  <mat-card>
+    <mat-card-title>
+      {{(korisnik | async)?.ime}} {{(korisnik | async)?.prezime}}
+    </mat-card-title>
+    <mat-card-subtitle>
+      {{(korisnik | async)?.datumRodjenja | date: "dd/MM/yyyy"}}
+    </mat-card-subtitle>
+    <mat-card-content>
+      <div fxLayout>
+        <div fxLayout="column" fxFlex="40%">
+            <p *ngIf="(korisnik | async)?.mjestoRodjenja">Mjesto rodjenja:</p>
+            <p *ngIf="(korisnik | async)?.JMBG">JMBG:</p>
+            <p *ngIf="(korisnik | async)?.adresa">Adresa:</p>
+            <p *ngIf="(korisnik | async)?.telefon">Telefon:</p>
+            <p *ngIf="(korisnik | async)?.mjestoStanovanja">Mjesto stanovanja:</p>
+            <p *ngIf="(korisnik | async)?.mail">Mail:</p>
+            <p *ngIf="(korisnik | async)?.pol">Pol:</p>
+            <p *ngIf="(korisnik | async)?.dijagnoza">Dijagnoza:</p>
+            <p *ngIf="(korisnik | async)?.poslovnaSposobnost">Poslovna sposobnost:</p>
+            <p *ngIf="(korisnik | async)?.obrazovanje">Obrazovanje:</p>
+            <p *ngIf="(korisnik | async)?.zanimanje">Zanimanje:</p>
+            <p *ngIf="(korisnik | async)?.zaposlenje">Zaposlenje:</p>
+            <p *ngIf="(korisnik | async)?.pripadnostJosNekojMarginalizovanojGrupi">Pripadnost jos nekoj marginalizovanoj grupi:</p>
+            <p *ngIf="(korisnik | async)?.brClanovaDomacinstvaISrodstvo">Broj clanova domacinstva:</p>
+        </div>
+        <div fxLayout="column" fxFlex="40%">
+            <p *ngIf="(korisnik | async)?.mjestoRodjenja">{{(korisnik | async)?.mjestoRodjenja}}</p>
+            <p *ngIf="(korisnik | async)?.mjestoStanovanja">{{(korisnik | async)?.mjestoStanovanja}}</p>
+            <p *ngIf="(korisnik | async)?.JMBG">{{(korisnik | async)?.JMBG}}</p>
+            <p *ngIf="(korisnik | async)?.adresa">{{(korisnik | async)?.adresa}}</p>
+            <p *ngIf="(korisnik | async)?.telefon">{{(korisnik | async)?.telefon}}</p>
+            <p *ngIf="(korisnik | async)?.mail">{{(korisnik | async)?.mail}}</p>
+            <p *ngIf="(korisnik | async)?.pol">{{(korisnik | async)?.pol}}</p>
+            <p *ngIf="(korisnik | async)?.dijagnoza">{{(korisnik | async)?.dijagnoza}}</p>
+            <p *ngIf="(korisnik | async)?.poslovnaSposobnost">{{(korisnik | async)?.poslovnaSposobnost}}</p>
+            <p *ngIf="(korisnik | async)?.obrazovanje">{{(korisnik | async)?.obrazovanje}}</p>
+            <p *ngIf="(korisnik | async)?.zanimanje">{{(korisnik | async)?.zanimanje}}</p>
+            <p *ngIf="(korisnik | async)?.zaposlenje">{{(korisnik | async)?.zaposlenje}}</p>
+            <p *ngIf="(korisnik | async)?.pripadnostJosNekojMarginalizovanojGrupi">{{(korisnik | async)?.pripadnostJosNekojMarginalizovanojGrupi}}</p>
+            <p *ngIf="(korisnik | async)?.brClanovaDomacinstvaISrodstvo">{{(korisnik | async)?.brClanovaDomacinstvaISrodstvo}}</p>
+        </div>
+      </div>
+      <mat-divider [inset]="true"></mat-divider>
+      <div fxLayout *ngIf="(korisnik | async)?.vrstaInvaliditeta.length && (korisnik | async)?.vrstaInvaliditeta[0]">
+        <div fxLayout="column" fxLayoutAlign="center start" fxFlex="40%">
+          <p>Vrsta Invaliditeta:</p>
+        </div>
+        <div fxLayout="column" fxFlex="40%">
+          <p *ngFor="let inval of (korisnik | async)?.vrstaInvaliditeta">{{inval}}</p>
+        </div>
+      </div>
+      <mat-divider [inset]="true"></mat-divider>
+      <div fxLayout *ngIf="(korisnik | async)?.stambeniStatus.length && (korisnik | async)?.stambeniStatus[0]">
+        <div fxLayout="column" fxLayoutAlign="center start" fxFlex="40%">
+          <p>Stambeni status:</p>
+        </div>
+        <div fxLayout="column" fxFlex="40%">
+          <p *ngFor="let stamb of (korisnik | async)?.stambeniStatus">{{stamb}}</p>
+        </div>
+      </div>
+      <mat-divider [inset]="true"></mat-divider>
+      <div fxLayout *ngIf="(korisnik | async)?.podnosilacZahtjeva.ime">
+        <div fxLayout="column" fxLayoutAlign="center start" fxFlex="40%">
+          <p>Podnosilac zahtjeva:</p>
+        </div>
+        <div fxLayout="column" fxFlex="40%">
+          <p *ngIf="(korisnik | async)?.podnosilacZahtjeva.ime">
+            {{(korisnik | async)?.podnosilacZahtjeva.ime}} {{(korisnik | async)?.podnosilacZahtjeva.prezime}}
+          </p>
+          <p *ngIf="(korisnik | async).podnosilacZahtjeva.telefon">{{(korisnik | async)?.podnosilacZahtjeva.telefon}}</p>
+          <p *ngFor="let srod of (korisnik | async)?.podnosilacZahtjeva.srodstvo">{{srod}}</p>
+        </div>
+      </div>
+      <div *ngIf="showUsluge && (usluge$ | async)[0]" [@enterAnimation]>
+          <div *ngFor="let usluga of (usluge$ | async); let i = index" class="usluga">
+            <p>Datum prvog obracanja</p>
+            <p>{{usluga.korespondencije[0].datumUpucivanjaZahtjeva | date: "dd/MM/yyyy"}}</p>
+            <a [routerLink]="['/Admin', 'pregledUsluge', (korisnik | async)._id, usluga._id]"><span>Pregledaj uslugu</span> <mat-icon>double_arrow</mat-icon> </a>
+            <mat-divider></mat-divider>
+          </div>
+      </div>
+    </mat-card-content>
+    <mat-card-actions fxLayout>
+      <button mat-raised-button color="primary" [disabled]="!(usluge$ | async)[0]" (click)="toggleUsluge()">
+        Pregledaj usluge - {{( usluge$ | async)?.length}}
+      </button>
+      <button mat-raised-button color="primary" (click)="navigateToAddUsluga()">Dodaj uslugu</button>
+      <button mat-raised-button color="primary"(click)="navigateToEdit()">Izmijeni podatke o korisniku</button>
+    </mat-card-actions>
+  </mat-card>
+</section>

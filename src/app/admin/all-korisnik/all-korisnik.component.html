@@ -1,0 +1,32 @@
+<section fxLayout="column">
+  <mat-accordion *ngFor="let korisnik of (korisnici$ | async)">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header collapsedHeight="70px" expandedHeight="70px">
+        <mat-panel-title>
+          Ime, prezime, godina rodjenja
+        </mat-panel-title>
+        <mat-panel-description>
+          {{korisnik?.ime}} {{korisnik?.prezime}} {{korisnik?.datumRodjenja | date: "dd/MM/yyyy"}}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div fxLayout fxLayoutAlign="center">
+        <div fxLayout="column" fxFlex="40%">
+          <p  *ngIf="korisnik.mjestoRodjenja">Mjesto rodjenja:</p>
+          <p *ngIf="korisnik.mjestoStanovanja">Mjesto stanovanja:</p>
+          <p *ngIf="korisnik.adresa">Adresa:</p>
+          <p *ngIf="korisnik.telefon">Telefon:</p>
+        </div>
+        <div fxLayout="column" fxFlex="40%">
+          <p  *ngIf="korisnik.mjestoRodjenja">{{korisnik?.mjestoRodjenja}}</p>
+          <p *ngIf="korisnik.mjestoStanovanja">{{korisnik?.mjestoStanovanja}}</p>
+          <p *ngIf="korisnik.adresa">{{korisnik?.adresa}}</p>
+          <p *ngIf="korisnik.telefon">{{korisnik?.telefon}}</p>
+        </div>
+      </div>
+      <mat-action-row>
+          <a [routerLink]="['/Admin', 'korisnik', korisnik._id]"><span>Pregledaj korisnika</span> <mat-icon>double_arrow</mat-icon> </a>
+      </mat-action-row>
+    </mat-expansion-panel>
+  </mat-accordion>
+</section>
+
