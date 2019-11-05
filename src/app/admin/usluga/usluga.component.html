@@ -100,9 +100,10 @@
         <p fxFlex="40%">Rezultat pruzene pomoci:</p>
         <p fxFlex="40%">{{koresp.rezultatPruzenePomoci}}</p>
       </div>
-      <button mat-raised-button (click)="navigateToUpdateKoresp(koresp._id)">Izmijeni podatke o komunikaciji</button>
+      <mat-divider></mat-divider>
+      <button mat-raised-button color="primary" (click)="navigateToUpdateKoresp(koresp._id)">Izmijeni podatke o komunikaciji</button>
       </div>
-      <button mat-raised-button>Dodaj novu komunikaciju</button>
+      <button mat-raised-button color="primary">Dodaj novu komunikaciju</button>
     </mat-card-content>
   </mat-card>
 </section>

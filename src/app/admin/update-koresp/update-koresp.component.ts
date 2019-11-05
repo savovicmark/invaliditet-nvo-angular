@@ -3,13 +3,14 @@ import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import { Store, select } from '@ngrx/store';
 import { AdminState } from '../admin.reducers';
 import { UslugaService } from 'src/app/services/usluga.service';
-import { KorespondencijaModel, KorespondencijaInitial } from 'src/app/Models/usluga.model';
+import { KorespondencijaModel, KorespondencijaInitial, UslugaModel } from 'src/app/Models/usluga.model';
 import { selectUslugaId, selectKorespId } from 'src/app/main/main.reducers';
 import { Subscription } from 'rxjs';
 import { switchMap, withLatestFrom, tap, concatMap, mergeMap, mapTo, filter, take } from 'rxjs/operators';
 import { selectKorespondencijaById, selectUslugaById } from '../admin.selectors';
 import { Dokument } from 'src/app/Models/dokument.model';
 import { UpdateKorespondencijaAction, GetUslugaByIdAction } from '../admin.actions';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-update-koresp',
@@ -19,9 +20,9 @@ import { UpdateKorespondencijaAction, GetUslugaByIdAction } from '../admin.actio
 export class UpdateKorespComponent implements OnInit, OnDestroy {
   sub$: Subscription;
   sub1$: Subscription;
-  sub2$: Subscription;
   uslugaForm: FormGroup;
-  koresp: KorespondencijaModel = KorespondencijaInitial;
+  koresp: KorespondencijaModel; // = KorespondencijaInitial;
+  usluga: UslugaModel;
   today = new Date();
   uslugaId: string;
   korespId: string;
@@ -45,57 +46,67 @@ export class UpdateKorespComponent implements OnInit, OnDestroy {
 
   constructor(private fb: FormBuilder,
               private store: Store<AdminState>,
-              private uslugaService: UslugaService) { }
+              private uslugaService: UslugaService,
+              private router: Router,
+              private route: ActivatedRoute) {
+                this.route.data.subscribe(data => {
+                  this.koresp = data.koresp;
+                } );
+               }
 
   ngOnInit() {
     this.uslugaService.getVrstePomoci().subscribe(vrste => {
       this.pitanja = vrste;
     });
-    this.sub1$ = this.store.pipe(
-      select(selectUslugaId)
-      ).subscribe(id => this.uslugaId = id);
-    this.sub2$ = this.store.pipe(select(selectKorespId)).subscribe(id => this.korespId = id);
-    /*this.sub$ = this.store.pipe(
+    this.route.params.subscribe(params => {
+      this.uslugaId = params.uslugaId;
+      this.korespId = params.korespId;
+    });
+
+    this.sub$ = this.store.pipe(
       select(selectUslugaId),
-      tap(uslugaId => this.store.dispatch(new GetUslugaByIdAction({uslugaId}))),
-      switchMap(uslugaId => this.store.pipe(select(selectUslugaById(uslugaId)))),
+      switchMap(uslugaId => this.store.pipe(select(selectUslugaById(uslugaId))))
+      ).subscribe(usluga => this.usluga = usluga);
+    /*this.sub2$ = this.store.pipe(select(selectKorespId)).subscribe(id => this.korespId = id);*/
+    this.sub1$ = this.store.pipe(
+      select(selectUslugaId),
       withLatestFrom(this.store.pipe(select(selectKorespId))),
-      switchMap(([usluga, korespId]) => this.store.pipe(select(selectKorespondencijaById(usluga._id, korespId))))
+      switchMap(([uslugaId, korespId]) => this.store.pipe(select(selectKorespondencijaById(uslugaId, korespId))))
       ).subscribe(korespondencija => {
-        this.koresp = korespondencija[0];
         this.dostAktiLength = korespondencija[0].dostavljenaDokumenta.length;
         this.pripPravniAktiLength = korespondencija[0].pripremljenaPravnaAkta.length;
         this.dostDok = korespondencija[0].dostavljenaDokumenta;
         this.pripAkta = korespondencija[0].pripremljenaPravnaAkta;
         // console.log(korespondencija);
-      });*/
+      });
     this.uslugaForm = this.fb.group({
-      koJePodnioZahtjev: [this.koresp.koJePodnioZahtjev],
-      imeKoJePodnioZahtjev: [this.koresp.imeKoJePodnioZahtjev],
-      prezimeKoJePodnioZahtjev: [this.koresp.prezimeKoJePodnioZahtjev],
-      datumUpucivanjaZahtjeva: [this.koresp.datumUpucivanjaZahtjeva],
-      kojimPutemJePodnijetZahtjev: [this.koresp.kojimPutemJePodnijetZahtjev],
-      pitanjeZaKojeJeTrazenaPomoc: [this.koresp.pitanjeZaKojeJeTrazenaPomoc],
-      dodajPitanje: [false],
-      novoPitanje: [''],
-      sazetakPitanja: [this.koresp.sazetakPitanja],
-      datumOdgovora: [this.koresp.datumOdgovora],
-      komeJeUpucenOdgovor: [this.koresp.komeJeUpucenOdgovor],
-      imeKomeJeUpucenOdgovor: [this.koresp.imeKomeJeUpucenOdgovor],
-      prezimeKomeJeUpucenOdgovor: [this.koresp.prezimeKomeJeUpucenOdgovor],
-      kojimPutemJePruzenOdgovor: [this.koresp.kojimPutemJePruzenOdgovor],
-      oblikPruzenePomoci: [this.koresp.oblikPruzenePomoci],
-      opisPruzenePomoci: [this.koresp.opisPruzenePomoci],
-      datumOdgovoraIliNovogObracanja: [this.koresp.datumOdgovoraIliNovogObracanja],
-      sazetakOdgovora: [this.koresp.sazetakOdgovoraIliNovogObracanja],
-      rezultatPruzenePomoci: [this.koresp.rezultatPruzenePomoci],
-      dokumenta: this.fb.array([
-       this.addDokument()
-      ]),
-      pravnaAkta: this.fb.array([
-        this.addPravnaAkta()
-      ])
-    });
+        koJePodnioZahtjev: [this.koresp.koJePodnioZahtjev],
+        imeKoJePodnioZahtjev: [this.koresp.imeKoJePodnioZahtjev],
+        prezimeKoJePodnioZahtjev: [this.koresp.prezimeKoJePodnioZahtjev],
+        datumUpucivanjaZahtjeva: [this.koresp.datumUpucivanjaZahtjeva],
+        kojimPutemJePodnijetZahtjev: [this.koresp.kojimPutemJePodnijetZahtjev],
+        pitanjeZaKojeJeTrazenaPomoc: [this.koresp.pitanjeZaKojeJeTrazenaPomoc],
+        dodajPitanje: [false],
+        novoPitanje: [''],
+        sazetakPitanja: [this.koresp.sazetakPitanja],
+        datumOdgovora: [this.koresp.datumOdgovora],
+        komeJeUpucenOdgovor: [this.koresp.komeJeUpucenOdgovor],
+        imeKomeJeUpucenOdgovor: [this.koresp.imeKomeJeUpucenOdgovor],
+        prezimeKomeJeUpucenOdgovor: [this.koresp.prezimeKomeJeUpucenOdgovor],
+        kojimPutemJePruzenOdgovor: [this.koresp.kojimPutemJePruzenOdgovor],
+        oblikPruzenePomoci: [this.koresp.oblikPruzenePomoci],
+        opisPruzenePomoci: [this.koresp.opisPruzenePomoci],
+        datumOdgovoraIliNovogObracanja: [this.koresp.datumOdgovoraIliNovogObracanja],
+        sazetakOdgovora: [this.koresp.sazetakOdgovoraIliNovogObracanja],
+        rezultatPruzenePomoci: [this.koresp.rezultatPruzenePomoci],
+        dokumenta: this.fb.array([
+         this.addDokument()
+        ]),
+        pravnaAkta: this.fb.array([
+          this.addPravnaAkta()
+        ])
+      });
+
   }
 
   dodajPitanje(): void {
@@ -187,12 +198,12 @@ export class UpdateKorespComponent implements OnInit, OnDestroy {
       korespId: this.korespId,
       koresp
     }));
+    this.router.navigate(['/Admin', 'pregledUsluge', this.usluga.korisnik, this.uslugaId]);
   }
 
   ngOnDestroy() {
-    // this.sub$.unsubscribe();
+    this.sub$.unsubscribe();
     this.sub1$.unsubscribe();
-    this.sub2$.unsubscribe();
   }
 
 }

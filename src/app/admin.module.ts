@@ -18,6 +18,8 @@ import { RouterModule } from '@angular/router';
 import { EditKorisnikComponent } from './admin/edit-korisnik/edit-korisnik.component';
 import { UslugaComponent } from './admin/usluga/usluga.component';
 import { UpdateKorespComponent } from './admin/update-koresp/update-koresp.component';
+import { UpdateKorespService } from './services/update-koresp.service';
+import { EditKorisnikService } from './services/edit-korisnik.service';
 
 @NgModule({
   declarations: [
@@ -41,10 +43,10 @@ import { UpdateKorespComponent } from './admin/update-koresp/update-koresp.compo
       {path: 'Admin/Svi korisnici', component: AllKorisnikComponent},
       {path: 'Admin/Dodaj korisnika', component: KorisnikPostComponent},
       {path: 'Admin/korisnik/:korisnikId', component: OneKorisnikComponent},
-      {path: 'Admin/editKorisnik/:korisnikId', component: EditKorisnikComponent},
+      {path: 'Admin/editKorisnik/:korisnikId', component: EditKorisnikComponent, resolve: {korisnik: EditKorisnikService}},
       {path: 'Admin/addUsluga/:korisnikId', component: UslugaPostComponent},
       {path: 'Admin/pregledUsluge/:korisnikId/:uslugaId', component: UslugaComponent},
-      {path: 'Admin/updateKoresp/:uslugaId/:korespId', component: UpdateKorespComponent}
+      {path: 'Admin/updateKoresp/:uslugaId/:korespId', component: UpdateKorespComponent, resolve: {koresp: UpdateKorespService}}
     ]),
     StoreModule.forFeature('admin', {korisnici: korisnikReducer, usluge: uslugeReducer}),
     EffectsModule.forFeature([AdminEffects])

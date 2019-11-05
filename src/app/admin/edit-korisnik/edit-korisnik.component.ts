@@ -7,7 +7,7 @@ import { Korisnik } from 'src/app/Models/korisnik.model';
 import { selectSelectedKorisnik } from '../admin.selectors';
 import { KorisnikService } from 'src/app/services/korisnik.service';
 import { UpdateKorisnikAction } from '../admin.actions';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-edit-korisnik',
@@ -75,10 +75,13 @@ export class EditKorisnikComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               private router: Router,
-              private store: Store<AdminState>) { }
+              private route: ActivatedRoute,
+              private store: Store<AdminState>) {
+                this.route.data.subscribe(data => this.korisnik = data.korisnik);
+              }
 
   ngOnInit() {
-    this.store.pipe(select(selectSelectedKorisnik)).subscribe(kor => this.korisnik = kor);
+    // this.store.pipe(select(selectSelectedKorisnik)).subscribe(kor => this.korisnik = kor);
     this.korisnikForm = this.fb.group({
       checkedForm : [true],
       userName: [this.korisnik.ime],
