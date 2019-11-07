@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import { Store, select } from '@ngrx/store';
 import { AdminState } from '../admin.reducers';
 import { UslugaService } from 'src/app/services/usluga.service';
-import { KorespondencijaModel, KorespondencijaInitial, UslugaModel } from 'src/app/Models/usluga.model';
+import { KorespondencijaModel, UslugaModel } from 'src/app/Models/usluga.model';
 import { selectUslugaId, selectKorespId } from 'src/app/main/main.reducers';
 import { Subscription } from 'rxjs';
 import { switchMap, withLatestFrom, tap, concatMap, mergeMap, mapTo, filter, take } from 'rxjs/operators';
@@ -21,7 +21,7 @@ export class UpdateKorespComponent implements OnInit, OnDestroy {
   sub$: Subscription;
   sub1$: Subscription;
   uslugaForm: FormGroup;
-  koresp: KorespondencijaModel; // = KorespondencijaInitial;
+  koresp: KorespondencijaModel;
   usluga: UslugaModel;
   today = new Date();
   uslugaId: string;
@@ -155,6 +155,10 @@ export class UpdateKorespComponent implements OnInit, OnDestroy {
   }
   pushPravniAkt(): void {
     this.pravnaAkta.push(this.addPravnaAkta());
+  }
+
+  viewDokument(file: string) {
+    console.log(file);
   }
 
   submitUsluga() {

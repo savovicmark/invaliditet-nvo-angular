@@ -20,6 +20,9 @@ import { UslugaComponent } from './admin/usluga/usluga.component';
 import { UpdateKorespComponent } from './admin/update-koresp/update-koresp.component';
 import { UpdateKorespService } from './services/update-koresp.service';
 import { EditKorisnikService } from './services/edit-korisnik.service';
+import { KorespPostComponent } from './admin/koresp-post/koresp-post.component';
+import { NgxDocViewerModule } from 'ngx-doc-viewer';
+import { ViewDocComponent } from './admin/view-doc/view-doc.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +32,9 @@ import { EditKorisnikService } from './services/edit-korisnik.service';
     OneKorisnikComponent,
     EditKorisnikComponent,
     UslugaComponent,
-    UpdateKorespComponent
+    UpdateKorespComponent,
+    KorespPostComponent,
+    ViewDocComponent
   ],
   imports: [
     CommonModule,
@@ -39,14 +44,18 @@ import { EditKorisnikService } from './services/edit-korisnik.service';
     MaterialModule,
     FlexLayoutModule,
     LayoutModule,
+    NgxDocViewerModule,
     RouterModule.forChild([
       {path: 'Admin/Svi korisnici', component: AllKorisnikComponent},
       {path: 'Admin/Dodaj korisnika', component: KorisnikPostComponent},
       {path: 'Admin/korisnik/:korisnikId', component: OneKorisnikComponent},
-      {path: 'Admin/editKorisnik/:korisnikId', component: EditKorisnikComponent, resolve: {korisnik: EditKorisnikService}},
+      {path: 'Admin/editKorisnik/:korisnikId', component: EditKorisnikComponent,
+        resolve: {korisnik: EditKorisnikService}},
       {path: 'Admin/addUsluga/:korisnikId', component: UslugaPostComponent},
       {path: 'Admin/pregledUsluge/:korisnikId/:uslugaId', component: UslugaComponent},
-      {path: 'Admin/updateKoresp/:uslugaId/:korespId', component: UpdateKorespComponent, resolve: {koresp: UpdateKorespService}}
+      {path: 'Admin/updateKoresp/:uslugaId/:korespId', component: UpdateKorespComponent,
+        resolve: {koresp: UpdateKorespService}},
+      {path: 'Admin/dodajKomunikaciju/:uslugaId/:korisnikId', component: KorespPostComponent}
     ]),
     StoreModule.forFeature('admin', {korisnici: korisnikReducer, usluge: uslugeReducer}),
     EffectsModule.forFeature([AdminEffects])
@@ -56,6 +65,9 @@ import { EditKorisnikService } from './services/edit-korisnik.service';
     UslugaPostComponent,
     AllKorisnikComponent
   ],
-  providers: []
+  providers: [],
+  entryComponents: [
+    ViewDocComponent
+  ]
 })
 export class AdminModule {}

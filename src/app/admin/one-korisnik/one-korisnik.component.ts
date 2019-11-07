@@ -6,7 +6,7 @@ import { Observable, Subscription } from 'rxjs';
 import { selectKorisnikById, selectSelectedKorisnik, selectUslugeForKorisnikById } from '../admin.selectors';
 import { GetKorisnikByIdAction, GetAllUslugaForKorisnikAction } from '../admin.actions';
 import { selectKorisnikId, selectRouter } from 'src/app/main/main.reducers';
-import { tap, map, mapTo, withLatestFrom, mergeMap, switchMap, filter } from 'rxjs/operators';
+import { tap, map, mapTo, withLatestFrom, mergeMap, switchMap, filter, distinctUntilChanged } from 'rxjs/operators';
 import { Params, Router } from '@angular/router';
 import { UslugaModel } from 'src/app/Models/usluga.model';
 import { trigger, transition, style, animate } from '@angular/animations';
@@ -44,6 +44,7 @@ export class OneKorisnikComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.sub$ = this.store.pipe(
       select(selectKorisnikId),
+      distinctUntilChanged(),
       tap(id => this.store.dispatch(new GetKorisnikByIdAction({id}))),
       tap(id => this.store.dispatch(new GetAllUslugaForKorisnikAction({korisnikId: id}))),
       tap(id => this.id = id)

@@ -9,6 +9,9 @@ import { switchMap, tap, take } from 'rxjs/operators';
 import { selectUslugaById, selectKorisnikById } from '../admin.selectors';
 import { GetKorisnikByIdAction, GetAllUslugaForKorisnikAction } from '../admin.actions';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material';
+import { ViewDocComponent } from '../view-doc/view-doc.component';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-usluga',
@@ -19,9 +22,11 @@ export class UslugaComponent implements OnInit {
 
   korisnik$: Observable<Korisnik>;
   usluga$: Observable<UslugaModel>;
+  baseUrl = environment.baseUrl;
 
   constructor(private store: Store<AdminState>,
-              private router: Router) {}
+              private router: Router,
+              private dialog: MatDialog) {}
 
   ngOnInit() {
     this.korisnik$ = this.store.pipe(
@@ -56,6 +61,25 @@ export class UslugaComponent implements OnInit {
       take(1)
     ).subscribe(usluga => {
       this.router.navigate(['/Admin', 'updateKoresp', usluga._id, korespId]);
+    });
+  }
+
+  navigateToAddKoresp() {
+    this.usluga$.pipe(
+      take(1)
+    ).subscribe(usluga => {
+      this.router.navigate(['/Admin', 'dodajKomunikaciju', usluga._id, usluga.korisnik]);
+    });
+  }
+
+  viewDokument(file: string) {
+    console.log(file);
+    this.dialog.open(ViewDocComponent, {
+      data: {
+        url: `https://fast-snail-20.localtunnel.me/tunelzalocalhost->/files/${file}`
+      },
+      width: '100vw',
+      height: '100vh'
     });
   }
 

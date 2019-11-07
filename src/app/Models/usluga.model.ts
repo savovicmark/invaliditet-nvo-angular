@@ -29,24 +29,3 @@ export interface UslugaModel {
   korespondencije: KorespondencijaModel[] | KorespondencijaModel;
 }
 
-export const KorespondencijaInitial: KorespondencijaModel = {
-  koJePodnioZahtjev: '',
-  imeKoJePodnioZahtjev: '',
-  prezimeKoJePodnioZahtjev: '',
-  datumUpucivanjaZahtjeva: new Date(),
-  kojimPutemJePodnijetZahtjev: [''],
-  pitanjeZaKojeJeTrazenaPomoc: [''],
-  sazetakPitanja: '',
-  dostavljenaDokumenta: [{file: '', opis: ''}],
-  datumOdgovora: new Date(),
-  komeJeUpucenOdgovor: '',
-  imeKomeJeUpucenOdgovor: '',
-  prezimeKomeJeUpucenOdgovor: '',
-  kojimPutemJePruzenOdgovor: [''],
-  oblikPruzenePomoci: [''],
-  opisPruzenePomoci: '',
-  pripremljenaPravnaAkta: [{file: '', opis: ''}],
-  datumOdgovoraIliNovogObracanja: new Date(),
-  sazetakOdgovoraIliNovogObracanja: '',
-  rezultatPruzenePomoci: ''
-};

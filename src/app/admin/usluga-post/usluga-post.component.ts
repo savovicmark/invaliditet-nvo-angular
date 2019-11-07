@@ -89,13 +89,13 @@ export class UslugaPostComponent implements OnInit, OnDestroy {
 
   addPravnaAkta(): FormGroup {
     return this.fb.group({
-      opis: ['']
+      opis: [null]
     });
   }
 
   addDokument(): FormGroup {
     return this.fb.group({
-      opis: ['']
+      opis: [null]
     });
   }
 
@@ -175,6 +175,7 @@ export class UslugaPostComponent implements OnInit, OnDestroy {
       }
     };
     if (this.koresp) {
+      console.log(this.uslugaId);
       this.store.dispatch(new PostKorespondencijaAction({
         korespondencija: usluga.korespondencije as KorespondencijaModel,
         uslugaId: this.uslugaId

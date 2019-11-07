@@ -77,6 +77,17 @@
       </mat-label>
       <textarea matInput cdkTextareaAutosize formControlName="sazetakPitanja"></textarea>
     </mat-form-field>
+    <!--dodato-->
+    <mat-divider></mat-divider>
+    <div fxLayout="column">
+      <p>Postojeca dokumenta</p>
+      <p *ngFor="let dok of koresp.dostavljenaDokumenta" fxLayout fxLayoutAlign="start center">
+        <span fxFlex="50%">{{dok.opis | uppercase}}</span>
+        <button mat-icon-button (click)="viewDokument(dok.file)" fxFlex="15%" ><mat-icon>attachment</mat-icon></button>
+      </p>
+    </div>
+    <mat-divider></mat-divider>
+    <!---->
     <div>
       <div fxLayout>
         <button mat-icon-button><mat-icon>folder_open</mat-icon></button>
@@ -166,6 +177,17 @@
         </mat-label>
         <textarea matInput cdkTextareaAutosize formControlName="opisPruzenePomoci"></textarea>
     </mat-form-field>
+    <!--dodato-->
+    <mat-divider></mat-divider>
+    <div fxLayout="column">
+      <p>Postojeca pravna akta</p>
+      <p *ngFor="let dok of koresp.pripremljenaPravnaAkta" fxLayout fxLayoutAlign="start center">
+        <span fxFlex="50%">{{dok.opis | uppercase}}</span>
+        <button mat-icon-button (click)="viewDokument(dok.file)" fxFlex="15%" ><mat-icon>attachment</mat-icon></button>
+      </p>
+    </div>
+    <mat-divider></mat-divider>
+    <!---->
     <div>
         <div fxLayout>
           <button mat-icon-button><mat-icon>folder_open</mat-icon></button>

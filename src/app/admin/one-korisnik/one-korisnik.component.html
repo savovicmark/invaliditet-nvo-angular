@@ -25,20 +25,20 @@
             <p *ngIf="(korisnik | async)?.brClanovaDomacinstvaISrodstvo">Broj clanova domacinstva:</p>
         </div>
         <div fxLayout="column" fxFlex="40%">
-            <p *ngIf="(korisnik | async)?.mjestoRodjenja">{{(korisnik | async)?.mjestoRodjenja}}</p>
-            <p *ngIf="(korisnik | async)?.mjestoStanovanja">{{(korisnik | async)?.mjestoStanovanja}}</p>
+            <p *ngIf="(korisnik | async)?.mjestoRodjenja">{{(korisnik | async)?.mjestoRodjenja | uppercase}}</p>
+            <p *ngIf="(korisnik | async)?.mjestoStanovanja">{{(korisnik | async)?.mjestoStanovanja | uppercase}}</p>
             <p *ngIf="(korisnik | async)?.JMBG">{{(korisnik | async)?.JMBG}}</p>
-            <p *ngIf="(korisnik | async)?.adresa">{{(korisnik | async)?.adresa}}</p>
+            <p *ngIf="(korisnik | async)?.adresa">{{(korisnik | async)?.adresa | uppercase}}</p>
             <p *ngIf="(korisnik | async)?.telefon">{{(korisnik | async)?.telefon}}</p>
-            <p *ngIf="(korisnik | async)?.mail">{{(korisnik | async)?.mail}}</p>
-            <p *ngIf="(korisnik | async)?.pol">{{(korisnik | async)?.pol}}</p>
-            <p *ngIf="(korisnik | async)?.dijagnoza">{{(korisnik | async)?.dijagnoza}}</p>
-            <p *ngIf="(korisnik | async)?.poslovnaSposobnost">{{(korisnik | async)?.poslovnaSposobnost}}</p>
-            <p *ngIf="(korisnik | async)?.obrazovanje">{{(korisnik | async)?.obrazovanje}}</p>
-            <p *ngIf="(korisnik | async)?.zanimanje">{{(korisnik | async)?.zanimanje}}</p>
-            <p *ngIf="(korisnik | async)?.zaposlenje">{{(korisnik | async)?.zaposlenje}}</p>
-            <p *ngIf="(korisnik | async)?.pripadnostJosNekojMarginalizovanojGrupi">{{(korisnik | async)?.pripadnostJosNekojMarginalizovanojGrupi}}</p>
-            <p *ngIf="(korisnik | async)?.brClanovaDomacinstvaISrodstvo">{{(korisnik | async)?.brClanovaDomacinstvaISrodstvo}}</p>
+            <p *ngIf="(korisnik | async)?.mail">{{(korisnik | async)?.mail | uppercase}}</p>
+            <p *ngIf="(korisnik | async)?.pol">{{(korisnik | async)?.pol | uppercase}}</p>
+            <p *ngIf="(korisnik | async)?.dijagnoza">{{(korisnik | async)?.dijagnoza | uppercase}}</p>
+            <p *ngIf="(korisnik | async)?.poslovnaSposobnost">{{(korisnik | async)?.poslovnaSposobnost | uppercase}}</p>
+            <p *ngIf="(korisnik | async)?.obrazovanje">{{(korisnik | async)?.obrazovanje | uppercase}}</p>
+            <p *ngIf="(korisnik | async)?.zanimanje">{{(korisnik | async)?.zanimanje | uppercase}}</p>
+            <p *ngIf="(korisnik | async)?.zaposlenje">{{(korisnik | async)?.zaposlenje | uppercase}}</p>
+            <p *ngIf="(korisnik | async)?.pripadnostJosNekojMarginalizovanojGrupi">{{(korisnik | async)?.pripadnostJosNekojMarginalizovanojGrupi | uppercase}}</p>
+            <p *ngIf="(korisnik | async)?.brClanovaDomacinstvaISrodstvo">{{(korisnik | async)?.brClanovaDomacinstvaISrodstvo | uppercase}}</p>
         </div>
       </div>
       <mat-divider [inset]="true"></mat-divider>
@@ -47,7 +47,7 @@
           <p>Vrsta Invaliditeta:</p>
         </div>
         <div fxLayout="column" fxFlex="40%">
-          <p *ngFor="let inval of (korisnik | async)?.vrstaInvaliditeta">{{inval}}</p>
+          <p *ngFor="let inval of (korisnik | async)?.vrstaInvaliditeta">{{inval | uppercase}}</p>
         </div>
       </div>
       <mat-divider [inset]="true"></mat-divider>
@@ -56,7 +56,7 @@
           <p>Stambeni status:</p>
         </div>
         <div fxLayout="column" fxFlex="40%">
-          <p *ngFor="let stamb of (korisnik | async)?.stambeniStatus">{{stamb}}</p>
+          <p *ngFor="let stamb of (korisnik | async)?.stambeniStatus">{{stamb | uppercase}}</p>
         </div>
       </div>
       <mat-divider [inset]="true"></mat-divider>
@@ -66,7 +66,7 @@
         </div>
         <div fxLayout="column" fxFlex="40%">
           <p *ngIf="(korisnik | async)?.podnosilacZahtjeva.ime">
-            {{(korisnik | async)?.podnosilacZahtjeva.ime}} {{(korisnik | async)?.podnosilacZahtjeva.prezime}}
+            {{(korisnik | async)?.podnosilacZahtjeva.ime | uppercase}} {{(korisnik | async)?.podnosilacZahtjeva.prezime | uppercase}}
           </p>
           <p *ngIf="(korisnik | async).podnosilacZahtjeva.telefon">{{(korisnik | async)?.podnosilacZahtjeva.telefon}}</p>
           <p *ngFor="let srod of (korisnik | async)?.podnosilacZahtjeva.srodstvo">{{srod}}</p>
