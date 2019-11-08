@@ -8,108 +8,165 @@
     </mat-card-subtitle>
     <mat-card-content >
       <div class="korespondencija" *ngFor="let koresp of (usluga$ | async)?.korespondencije">
-        <div fxLayout *ngIf="koresp.datumUpucivanjaZahtjeva">
-          <p fxFlex="40%">Datum upucivanja zahtjeva:</p>
-          <p fxFlex="40%">{{koresp.datumUpucivanjaZahtjeva | date: "dd/MM/yyyy"}}</p>
+        <div fxLayout fxLayoutAlign="start center" *ngIf="koresp.datumUpucivanjaZahtjeva">
+          <p fxFlex="40%" fxLayout fxLayoutAlign="start center" fxLayoutGap="5px">
+            <mat-icon>date_range</mat-icon>
+            <span>Datum upucivanja zahtjeva:</span>
+          </p>
+          <p class="podaci" fxFlex="40%">{{koresp.datumUpucivanjaZahtjeva | date: "dd/MM/yyyy"}}</p>
         </div>
-        <div fxLayout *ngIf="koresp.koJePodnioZahtjev === 'korisnik'">
-          <p fxFlex="40%">Zahtjev je podnio korisnik licno:</p>
-          <p fxFlex="40%">{{(korisnik$ | async)?.ime | uppercase}} {{(korisnik$ | async)?.prezime | uppercase}}</p>
+        <div fxLayout fxLayoutAlign="start center" *ngIf="koresp.koJePodnioZahtjev === 'korisnik'">
+          <p fxFlex="40%" fxLayoutAlign="start center" fxLayoutGap="5px">
+            <mat-icon>person</mat-icon>
+            <span>Zahtjev je podnio korisnik licno:</span>
+          </p>
+          <p class="podaci" fxFlex="40%">{{(korisnik$ | async)?.ime | uppercase}} {{(korisnik$ | async)?.prezime | uppercase}}</p>
         </div>
-        <div fxLayout *ngIf="koresp.koJePodnioZahtjev === 'drugo'">
-          <p fxFlex="40%">Zahtjev je u ime korisnika podnio:</p>
-          <p fxFlex="40%">{{koresp.imeKoJePodnioZahtjev | uppercase}} {{koresp.prezimeKoJePodnioZahtjev | uppercase}}</p>
+        <div fxLayout fxLayoutAlign="start center" *ngIf="koresp.koJePodnioZahtjev === 'drugo'">
+          <p fxFlex="40%" fxLayoutAlign="start center" fxLayoutGap="5px">
+            <mat-icon>person</mat-icon>
+            <span>Zahtjev je u ime korisnika podnio:</span>
+          </p>
+          <p class="podaci" fxFlex="40%">{{koresp.imeKoJePodnioZahtjev | uppercase}} {{koresp.prezimeKoJePodnioZahtjev | uppercase}}</p>
         </div>
-        <div fxLayout *ngIf="koresp.kojimPutemJePodnijetZahtjev[0]">
-          <div fxLayout="column" fxLayoutAlign="center start" fxFlex="40%">
-              <p>Zahtjev je podnijet putem:</p>
+        <div fxLayout fxLayoutAlign="start center" *ngIf="koresp.kojimPutemJePodnijetZahtjev[0]">
+          <div fxLayout="column" fxLayoutAlign="center start" fxFlex="40%" >
+              <p fxLayoutAlign="start center" fxLayoutGap="5px">
+                <mat-icon>speaker_phone</mat-icon>
+                <span>Zahtjev je podnijet putem:</span>
+              </p>
           </div>
           <div fxFlex="40%">
-            <p *ngFor="let put of koresp.kojimPutemJePodnijetZahtjev">{{put | uppercase}}</p>
+            <p class="podaci" *ngFor="let put of koresp.kojimPutemJePodnijetZahtjev">{{put | uppercase}}</p>
           </div>
         </div>
-        <div fxLayout *ngIf="koresp.pitanjeZaKojeJeTrazenaPomoc[0]">
+        <div fxLayout fxLayoutAlign="start center" *ngIf="koresp.pitanjeZaKojeJeTrazenaPomoc[0]">
             <div fxLayout="column" fxLayoutAlign="center start" fxFlex="40%">
-                <p>Pitanje za koje je trazena pomoc:</p>
+                <p fxLayout fxLayoutAlign="start center" fxLayoutGap="5px">
+                  <mat-icon>live_help</mat-icon>
+                  <span>Pitanje za koje je trazena pomoc:</span>
+                </p>
             </div>
             <div fxFlex="40%">
-              <p *ngFor="let pitanje of koresp.pitanjeZaKojeJeTrazenaPomoc">{{pitanje | uppercase}}</p>
+              <p class="podaci" *ngFor="let pitanje of koresp.pitanjeZaKojeJeTrazenaPomoc">{{pitanje | uppercase}}</p>
             </div>
         </div>
-        <div fxLayout *ngIf="koresp.sazetakPitanja">
-          <p fxFlex="40%">Sazetak pitanja:</p>
-          <p fxFlex="40%">{{koresp.sazetakPitanja | uppercase}}</p>
+        <div fxLayout fxLayoutAlign="start center" *ngIf="koresp.sazetakPitanja">
+          <p fxFlex="40%" fxLayout fxLayoutAlign="start center" fxLayoutGap="5px">
+            <mat-icon>help</mat-icon>
+            <span>Sazetak pitanja:</span>
+          </p>
+          <p class="podaci" fxFlex="40%">{{koresp.sazetakPitanja | uppercase}}</p>
         </div>
-        <div fxLayout *ngIf="koresp.dostavljenaDokumenta[0]">
+        <div fxLayout fxLayoutAlign="start center" *ngIf="koresp.dostavljenaDokumenta[0]">
             <div fxLayout="column" fxLayoutAlign="center start" fxFlex="40%">
-                <p>Dostavljena dokumenta:</p>
+                <p fxLayout fxLayoutAlign="start center" fxLayoutGap="5px">
+                  <mat-icon>folder_open</mat-icon>
+                  <span>Dostavljena dokumenta:</span>
+                </p>
             </div>
             <div fxFlex="40%">
-              <p *ngFor="let dok of koresp.dostavljenaDokumenta" fxLayout fxLayoutAlign="center center">
+              <p class="podaci" *ngFor="let dok of koresp.dostavljenaDokumenta" fxLayout fxLayoutAlign="start center">
                 <span fxFlex="40%">{{dok.opis | uppercase}}</span>
                 <button mat-icon-button (click)="viewDokument(dok.file)" fxFlex="15%" ><mat-icon>attachment</mat-icon></button>
               </p>
             </div>
         </div>
-        <div fxLayout *ngIf="koresp.datumOdgovora">
-          <p fxFlex="40%">Datum pruzanja odgovora:</p>
-          <p fxFlex="40%">{{koresp.datumOdgovora | date: "dd/MM/yyyy"}}</p>
+        <div fxLayout fxLayoutAlign="start center" *ngIf="koresp.datumOdgovora">
+          <p fxFlex="40%" fxLayout fxLayoutAlign="start center" fxLayoutGap="5px">
+            <mat-icon>date_range</mat-icon>
+            <span>Datum pruzanja odgovora:</span>
+          </p>
+          <p class="podaci" fxFlex="40%">{{koresp.datumOdgovora | date: "dd/MM/yyyy"}}</p>
         </div>
-        <div fxLayout *ngIf="koresp.komeJeUpucenOdgovor === 'korisnik' || !koresp.komeJeUpucenOdgovor">
-            <p fxFlex="40%">Odgovor je upucen korisniku licno:</p>
-            <p fxFlex="40%">{{(korisnik$ | async)?.ime | uppercase}} {{(korisnik$ | async)?.prezime | uppercase}}</p>
+        <div fxLayout fxLayoutAlign="start center" *ngIf="koresp.komeJeUpucenOdgovor === 'korisnik' || !koresp.komeJeUpucenOdgovor">
+            <p fxFlex="40%" fxLayout fxLayoutAlign="start center" fxLayoutGap="5px">
+              <mat-icon>person</mat-icon>
+              <span>Odgovor je upucen korisniku licno:</span>
+            </p>
+            <p class="podaci" fxFlex="40%">{{(korisnik$ | async)?.ime | uppercase}} {{(korisnik$ | async)?.prezime | uppercase}}</p>
         </div>
-        <div fxLayout *ngIf="koresp.komeJeUpucenOdgovor === 'drugo'">
-            <p fxFlex="40%">Odgovor je u ime korisnika upucen:</p>
-            <p fxFlex="40%">{{koresp?.imeKomeJeUpucenOdgovor | uppercase}} {{koresp?.prezimeKomeJeUpucenOdgovor | uppercase}}</p>
+        <div fxLayout fxLayoutAlign="start center" *ngIf="koresp.komeJeUpucenOdgovor === 'drugo'">
+            <p fxFlex="40%" fxLayout fxLayoutAlign="start center" fxLayoutGap="5px">
+              <mat-icon>person</mat-icon>
+              <span>Odgovor je u ime korisnika upucen:</span>
+            </p>
+            <p class="podaci" fxFlex="40%">{{koresp?.imeKomeJeUpucenOdgovor | uppercase}} {{koresp?.prezimeKomeJeUpucenOdgovor | uppercase}}</p>
         </div>
-        <div fxLayout *ngIf="koresp.kojimPutemJePruzenOdgovor[0]">
+        <div fxLayout fxLayoutAlign="start center" *ngIf="koresp.kojimPutemJePruzenOdgovor[0]">
             <div fxLayout="column" fxLayoutAlign="center start" fxFlex="40%">
-                <p>Odgovor je pruzen putem:</p>
+                <p fxFlex="40%" fxLayout fxLayoutAlign="start center" fxLayoutGap="5px">
+                  <mat-icon>speaker_phone</mat-icon>
+                  <span> Odgovor je pruzen putem:</span>
+                </p>
             </div>
             <div fxFlex="40%">
-              <p *ngFor="let put of koresp.kojimPutemJePruzenOdgovor">{{put | uppercase}}</p>
+              <p class="podaci" *ngFor="let put of koresp.kojimPutemJePruzenOdgovor">{{put | uppercase}}</p>
             </div>
         </div>
-        <div fxLayout *ngIf="koresp.oblikPruzenePomoci[0]">
+        <div fxLayout fxLayoutAlign="start center" *ngIf="koresp.oblikPruzenePomoci[0]">
             <div fxLayout="column" fxLayoutAlign="center start" fxFlex="40%">
-                <p>Oblik pruzene pomoci:</p>
+                <p fxFlex="40%" fxLayout fxLayoutAlign="start center" fxLayoutGap="5px">
+                  <mat-icon>live_help</mat-icon>
+                  <span>Oblik pruzene pomoci:</span>
+                </p>
             </div>
             <div fxFlex="40%">
-              <p *ngFor="let obl of koresp.oblikPruzenePomoci">{{obl | uppercase}}</p>
+              <p class="podaci" *ngFor="let obl of koresp.oblikPruzenePomoci">{{obl | uppercase}}</p>
             </div>
         </div>
-        <div fxLayout *ngIf="koresp.opisPruzenePomoci">
-          <p fxFlex="40%">Kratki opis pruzene pomoci:</p>
-          <p fxFlex="40%">{{koresp.opisPruzenePomoci | uppercase}}</p>
+        <div fxLayout fxLayoutAlign="start center" *ngIf="koresp.opisPruzenePomoci">
+          <p fxFlex="40%" fxLayout fxLayoutAlign="start center" fxLayoutGap="5px">
+            <mat-icon>description</mat-icon>
+            <span>Kratki opis pruzene pomoci:</span>
+          </p>
+          <p class="podaci" fxFlex="40%">{{koresp.opisPruzenePomoci | uppercase}}</p>
         </div>
-        <div fxLayout *ngIf="koresp.pripremljenaPravnaAkta[0]">
+        <div fxLayout fxLayoutAlign="start center" *ngIf="koresp.pripremljenaPravnaAkta[0]">
           <div fxLayout="column" fxLayoutAlign="center start" fxFlex="40%">
-              <p>Pripremljena pravna akta:</p>
+              <p fxLayout fxLayoutAlign="start center" fxLayoutGap="5px">
+                <mat-icon>folder_open</mat-icon>
+                <span>Pripremljena pravna akta:</span>
+              </p>
           </div>
           <div fxFlex="40%">
-            <p *ngFor="let dok of koresp.pripremljenaPravnaAkta" fxLayout fxLayoutAlign="center center">
+            <p class="podaci" *ngFor="let dok of koresp.pripremljenaPravnaAkta" fxLayout fxLayoutAlign="center center">
               <span fxFlex="40%">{{dok.opis | uppercase}}</span>
               <button mat-icon-button (click)="viewDokument(dok.file)" fxFlex="15%" ><mat-icon>attachment</mat-icon></button>
             </p>
           </div>
       </div>
-      <div fxLayout *ngIf="koresp.datumOdgovoraIliNovogObracanja">
-        <p fxFlex="40%">Datum odgovora/novog obracanja korisnika:</p>
-        <p fxFlex="40%">{{koresp.datumOdgovoraIliNovogObracanja | date: "dd/MM/yyyy"}}</p>
+      <div fxLayout fxLayoutAlign="start center" *ngIf="koresp.datumOdgovoraIliNovogObracanja">
+        <p fxFlex="40%" fxLayout fxLayoutAlign="start center" fxLayoutGap="5px">
+          <mat-icon>date_range</mat-icon>
+          <span>Datum odgovora/novog obracanja korisnika:</span>
+        </p>
+        <p class="podaci" fxFlex="40%">{{koresp.datumOdgovoraIliNovogObracanja | date: "dd/MM/yyyy"}}</p>
       </div>
-      <div fxLayout *ngIf="koresp.sazetakOdgovoraIliNovogObracanja">
-        <p fxFlex="40%">Sazetak odgovora korisnika:</p>
-        <p fxFlex="40%">{{koresp.sazetakOdgovoraIliNovogObracanja | uppercase}}</p>
+      <div fxLayout fxLayoutAlign="start center" *ngIf="koresp.sazetakOdgovoraIliNovogObracanja">
+        <p fxFlex="40%" fxLayout fxLayoutAlign="start center" fxLayoutGap="5px">
+          <mat-icon>near_me</mat-icon>
+          <span>Sazetak odgovora korisnika:</span>
+        </p>
+        <p class="podaci" fxFlex="40%">{{koresp.sazetakOdgovoraIliNovogObracanja | uppercase}}</p>
       </div>
-      <div fxLayout *ngIf="koresp.rezultatPruzenePomoci">
-        <p fxFlex="40%">Rezultat pruzene pomoci:</p>
-        <p fxFlex="40%">{{koresp.rezultatPruzenePomoci | uppercase}}</p>
+      <div fxLayout fxLayoutAlign="start center" *ngIf="koresp.rezultatPruzenePomoci">
+        <p fxFlex="40%" fxLayout fxLayoutAlign="start center" fxLayoutGap="5px">
+          <mat-icon>score</mat-icon>
+          <span>Rezultat pruzene pomoci:</span>
+        </p>
+        <p class="podaci" fxFlex="40%">{{koresp.rezultatPruzenePomoci | uppercase}}</p>
       </div>
       <mat-divider></mat-divider>
-      <button mat-raised-button color="primary" (click)="navigateToUpdateKoresp(koresp._id)">Izmijeni podatke o komunikaciji</button>
+      <button mat-button isIconButton="true" color="primary" (click)="navigateToUpdateKoresp(koresp._id)">
+        <mat-icon>find_replace</mat-icon>
+        Izmijeni podatke o komunikaciji
+      </button>
       </div>
-      <button mat-raised-button color="primary" (click)="navigateToAddKoresp()">Dodaj novu komunikaciju</button>
+      <button mat-button isIconButton="true" color="primary" (click)="navigateToAddKoresp()">
+        <mat-icon>plus_one</mat-icon>
+        Dodaj novu komunikaciju
+      </button>
     </mat-card-content>
   </mat-card>
 </section>

@@ -78,8 +78,8 @@
       <textarea matInput cdkTextareaAutosize formControlName="sazetakPitanja"></textarea>
     </mat-form-field>
     <div>
-      <div fxLayout>
-        <button mat-icon-button><mat-icon>folder_open</mat-icon></button>
+      <div fxLayout fxLayoutAlign="start center" fxLayoutGap="10px">
+        <mat-icon>folder_open</mat-icon>
         <p>Dostavljena dokumenta</p>
       </div>
       <div *ngFor="let dok of dokuments.controls; let i = index" formArrayName="dokumenta">
@@ -167,8 +167,8 @@
         <textarea matInput cdkTextareaAutosize formControlName="opisPruzenePomoci"></textarea>
     </mat-form-field>
     <div>
-        <div fxLayout>
-          <button mat-icon-button><mat-icon>folder_open</mat-icon></button>
+        <div fxLayout fxLayoutAlign="start center" fxLayoutGap="10px">
+          <mat-icon>folder_open</mat-icon>
           <p>Pripremljena pravna akta</p>
         </div>
         <div *ngFor="let dok of pravnaAkta.controls; let i = index" formArrayName="pravnaAkta">

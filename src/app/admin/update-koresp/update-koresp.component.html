@@ -80,17 +80,21 @@
     <!--dodato-->
     <mat-divider></mat-divider>
     <div fxLayout="column">
-      <p>Postojeca dokumenta</p>
+      <p fxLayout fxLayoutAlign="start center" fxLayoutGap="10px">
+        <mat-icon>folder_open</mat-icon>
+        <span>Postojeca dokumenta</span>
+      </p>
       <p *ngFor="let dok of koresp.dostavljenaDokumenta" fxLayout fxLayoutAlign="start center">
         <span fxFlex="50%">{{dok.opis | uppercase}}</span>
-        <button mat-icon-button (click)="viewDokument(dok.file)" fxFlex="15%" ><mat-icon>attachment</mat-icon></button>
+        <button mat-icon-button type="button" (click)="viewDokument(dok.file)" fxFlex="15%" ><mat-icon>attachment</mat-icon></button>
+        <button mat-icon-button type="button" fxFlex="15%" ><mat-icon >delete_forever</mat-icon></button>
       </p>
     </div>
     <mat-divider></mat-divider>
     <!---->
     <div>
-      <div fxLayout>
-        <button mat-icon-button><mat-icon>folder_open</mat-icon></button>
+      <div fxLayout fxLayoutAlign="start center" fxLayoutGap="10px">
+        <mat-icon>folder_open</mat-icon>
         <p>Dostavljena dokumenta</p>
       </div>
       <div *ngFor="let dok of dokuments.controls; let i = index" formArrayName="dokumenta">
@@ -180,17 +184,21 @@
     <!--dodato-->
     <mat-divider></mat-divider>
     <div fxLayout="column">
-      <p>Postojeca pravna akta</p>
+      <p fxLayout fxLayoutAlign="start center" fxLayoutGap="10px">
+        <mat-icon>folder_open</mat-icon>
+        <span>Postojeca pravna akta</span>
+      </p>
       <p *ngFor="let dok of koresp.pripremljenaPravnaAkta" fxLayout fxLayoutAlign="start center">
         <span fxFlex="50%">{{dok.opis | uppercase}}</span>
-        <button mat-icon-button (click)="viewDokument(dok.file)" fxFlex="15%" ><mat-icon>attachment</mat-icon></button>
+        <button mat-icon-button type="button" (click)="viewDokument(dok.file)" fxFlex="15%" ><mat-icon>attachment</mat-icon></button>
+        <button mat-icon-button type="button" fxFlex="15%" ><mat-icon>delete_forever</mat-icon></button>
       </p>
     </div>
     <mat-divider></mat-divider>
     <!---->
     <div>
-        <div fxLayout>
-          <button mat-icon-button><mat-icon>folder_open</mat-icon></button>
+        <div fxLayout fxLayoutAlign="start center" fxLayoutGap="10px">
+          <mat-icon>folder_open</mat-icon>
           <p>Pripremljena pravna akta</p>
         </div>
         <div *ngFor="let dok of pravnaAkta.controls; let i = index" formArrayName="pravnaAkta">

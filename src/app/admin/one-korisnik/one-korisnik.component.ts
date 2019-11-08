@@ -36,7 +36,6 @@ export class OneKorisnikComponent implements OnInit, OnDestroy {
   usluge$: Observable<UslugaModel[]>;
   id: string;
   sub$: Subscription;
-  showUsluge = false;
 
   constructor(private store: Store<AdminState>,
               private router: Router) { }
@@ -61,10 +60,6 @@ export class OneKorisnikComponent implements OnInit, OnDestroy {
     this.router.navigate(['/Admin', 'addUsluga', this.id]);
   }
 
-
-  toggleUsluge() {
-    this.showUsluge = !this.showUsluge;
-  }
 
   ngOnDestroy() {
     this.sub$.unsubscribe();

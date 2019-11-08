@@ -9,9 +9,10 @@ section{
   border-top-color: #3F51B5;
 }*/
 a{
-  display: flex;
+  display: inline-flex;
   text-decoration: none;
   color: #3F51B5;
+  font-weight: bold;
 }
 span{
   align-self: center;
@@ -21,4 +22,16 @@ span{
 }
 mat-divider{
   margin-top: 10px;
+}
+
+.naslov{
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.button{
+  font-size: 18px;
+}
+.podaci{
+  font-weight: 500;
 }
