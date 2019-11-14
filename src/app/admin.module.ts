@@ -23,6 +23,7 @@ import { EditKorisnikService } from './services/edit-korisnik.service';
 import { KorespPostComponent } from './admin/koresp-post/koresp-post.component';
 import { NgxDocViewerModule } from 'ngx-doc-viewer';
 import { ViewDocComponent } from './admin/view-doc/view-doc.component';
+import { DialogComponent } from './admin/dialog/dialog.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { ViewDocComponent } from './admin/view-doc/view-doc.component';
     UslugaComponent,
     UpdateKorespComponent,
     KorespPostComponent,
-    ViewDocComponent
+    ViewDocComponent,
+    DialogComponent
   ],
   imports: [
     CommonModule,
@@ -67,7 +69,8 @@ import { ViewDocComponent } from './admin/view-doc/view-doc.component';
   ],
   providers: [],
   entryComponents: [
-    ViewDocComponent
+    ViewDocComponent,
+    DialogComponent
   ]
 })
 export class AdminModule {}

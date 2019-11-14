@@ -22,7 +22,11 @@ export enum AdminActionTypes {
   PostKorespondencija = '[Admin Post Korespondencija] Post Korespondencija',
   KorespondencijaPosted = '[Admin API] Korespondencija Posted',
   UpdateKorespondencija = '[Admin Update Korespondencija] Update Korespondencija',
-  UslugaUpdated = '[Admin API] Usluga Updated'
+  UslugaUpdated = '[Admin API] Usluga Updated',
+  DeleteDostDok = '[Update Koresp] Delete Dostavljeni Dokument',
+  DostDokDeleted = '[Admin API] Dostavljeni Dokument Deleted',
+  DeletePripAkt = '[Update Koresp] Delete Pripremljeni Pravni Akt',
+  PripAktDeleted = '[Admin API] Pripremljeni Pravni Akt Deleted'
 }
 
 export class PostKorisnikAction implements Action {
@@ -113,6 +117,27 @@ export class UpdateKorespondencijaAction implements Action {
   readonly type = AdminActionTypes.UpdateKorespondencija;
   constructor(public payload: {uslugaId: string, korespId: string, koresp: KorespondencijaModel}) {}
 }
+
+export class DeleteDostDokAction implements Action {
+  readonly type = AdminActionTypes.DeleteDostDok;
+  constructor(public payload: {uslugaId: string, korespId: string, dostDokId: string}) {}
+}
+
+export class DostDokDeletedAction implements Action {
+  readonly type = AdminActionTypes.DostDokDeleted;
+  constructor(public payload: {usluga: Update<UslugaModel>}) {}
+}
+
+export class DeletePripAktAction implements Action {
+  readonly type = AdminActionTypes.DeletePripAkt;
+  constructor(public payload: {uslugaId: string, korespId: string, pravniAktId: string}) {}
+}
+
+export class PripAktDeletedAction implements Action {
+  readonly type = AdminActionTypes.PripAktDeleted;
+  constructor(public payload: {usluga: Update<UslugaModel>}) {}
+}
+
 export type AdminActions = GetAllKorisnikAction
                           | GetKorisnikByIdAction
                           | PostKorisnikAction
@@ -130,4 +155,8 @@ export type AdminActions = GetAllKorisnikAction
                           | KorisnikUpdatedAction
                           | UpdateKorespondencijaAction
                           | GetUslugaByIdAction
-                          | UslugaByIdLoadedAction;
+                          | UslugaByIdLoadedAction
+                          | DeleteDostDokAction
+                          | DeletePripAktAction
+                          | DostDokDeletedAction
+                          | PripAktDeletedAction;

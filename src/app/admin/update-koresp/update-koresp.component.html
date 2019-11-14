@@ -2,7 +2,7 @@
   <form fxFlex fxLayout="column" [formGroup]="uslugaForm" (ngSubmit)="submitUsluga()">
       <mat-form-field>
           <mat-label>
-            Da li korisnik obratio licno ili druga osoba u njegovo ime?
+            Da li se korisnik obratio licno ili druga osoba u njegovo ime?
           </mat-label>
           <mat-select formControlName="koJePodnioZahtjev">
             <mat-option>PONISTI IZBOR</mat-option>
@@ -41,7 +41,6 @@
               Nacin na koji je upuceno pitanje
           </mat-label>
           <mat-select multiple="true" formControlName="kojimPutemJePodnijetZahtjev">
-            <mat-option>PONISTI IZBOR</mat-option>
             <mat-option *ngFor="let obracanje of obracanja" [value]="obracanje" >
               {{obracanje | uppercase}}
             </mat-option>
@@ -87,7 +86,9 @@
       <p *ngFor="let dok of koresp.dostavljenaDokumenta" fxLayout fxLayoutAlign="start center">
         <span fxFlex="50%">{{dok.opis | uppercase}}</span>
         <button mat-icon-button type="button" (click)="viewDokument(dok.file)" fxFlex="15%" ><mat-icon>attachment</mat-icon></button>
-        <button mat-icon-button type="button" fxFlex="15%" ><mat-icon >delete_forever</mat-icon></button>
+        <button mat-icon-button type="button" fxFlex="15%" (click)="deleteDostDok(dok._id)">
+          <mat-icon >delete_forever</mat-icon>
+        </button>
       </p>
     </div>
     <mat-divider></mat-divider>
@@ -151,7 +152,6 @@
           Nacin na koji je upucen odgovor
       </mat-label>
       <mat-select multiple="true" formControlName="kojimPutemJePruzenOdgovor">
-        <mat-option>PONISTI IZBOR</mat-option>
         <mat-option *ngFor="let obracanje of obracanja" [value]="obracanje" >
           {{obracanje | uppercase}}
         </mat-option>
@@ -175,7 +175,7 @@
       </mat-select>
       <mat-hint>Mozete obiljeziti vise oblika pomoci</mat-hint>
     </mat-form-field>
-    <mat-form-field>
+    <mat-form-field class="margin">
         <mat-label>
           Kratki opis pruzene pomoci
         </mat-label>
@@ -191,7 +191,9 @@
       <p *ngFor="let dok of koresp.pripremljenaPravnaAkta" fxLayout fxLayoutAlign="start center">
         <span fxFlex="50%">{{dok.opis | uppercase}}</span>
         <button mat-icon-button type="button" (click)="viewDokument(dok.file)" fxFlex="15%" ><mat-icon>attachment</mat-icon></button>
-        <button mat-icon-button type="button" fxFlex="15%" ><mat-icon>delete_forever</mat-icon></button>
+        <button mat-icon-button type="button" fxFlex="15%" (click)="deletePripAkt(dok._id)" >
+          <mat-icon>delete_forever</mat-icon>
+        </button>
       </p>
     </div>
     <mat-divider></mat-divider>

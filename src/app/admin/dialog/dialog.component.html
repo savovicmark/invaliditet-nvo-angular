@@ -1,0 +1,9 @@
+<div fxLayout="column" fxLayoutAlign="center center">
+  <h2 mat-dialog-title>Jeste li sigurni da zelite da izbrisete</h2>
+  <h2 mat-dialog-title>{{dialogData.question}}?</h2>
+</div>
+<mat-dialog-actions fxLayout fxLayoutAlign="center">
+  <button mat-raised-button color="accent" [mat-dialog-close]="true">Da</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="false">Ne</button>
+</mat-dialog-actions>
+

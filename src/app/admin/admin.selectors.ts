@@ -54,10 +54,30 @@ export const selectUslugeForKorisnikById = (id: string) => createSelector(
   selectUslugaAll,
   usluge => usluge.filter(usluga => usluga.korisnik === id)
 );
-
+// ================================================================================
+export function sortKorespById(koresp1: KorespondencijaModel, koresp2: KorespondencijaModel) {
+  if (koresp1.datumUpucivanjaZahtjeva && koresp2.datumUpucivanjaZahtjeva) {
+    if (koresp1.datumUpucivanjaZahtjeva > koresp2.datumUpucivanjaZahtjeva) {
+      return -1;
+    } else if (koresp1.datumUpucivanjaZahtjeva < koresp2.datumUpucivanjaZahtjeva) {
+      return 1;
+    }
+  } else {
+    return 0;
+  }
+}
+// =================================================================================
 export const selectUslugaById = (id: string) => createSelector(
   selectUslugaEntities,
-  usluge => usluge[id]
+  (usluge) => {
+    if (usluge[id]) {
+      const usluga = usluge[id];
+      usluga.korespondencije = (usluga.korespondencije as KorespondencijaModel[]).sort(sortKorespById);
+      return usluga;
+    } else {
+      return usluge[id];
+    }
+  }
 );
 
 export const selectKorespondencijaById = (uslugaId: string, korespId: string) => createSelector(

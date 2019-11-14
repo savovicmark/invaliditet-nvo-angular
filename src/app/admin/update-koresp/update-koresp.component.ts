@@ -9,8 +9,10 @@ import { Subscription } from 'rxjs';
 import { switchMap, withLatestFrom, tap, concatMap, mergeMap, mapTo, filter, take } from 'rxjs/operators';
 import { selectKorespondencijaById, selectUslugaById } from '../admin.selectors';
 import { Dokument } from 'src/app/Models/dokument.model';
-import { UpdateKorespondencijaAction, GetUslugaByIdAction } from '../admin.actions';
+import { UpdateKorespondencijaAction, GetUslugaByIdAction, DeleteDostDokAction, DeletePripAktAction } from '../admin.actions';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MatDialog } from '@angular/material';
+import { DialogComponent } from '../dialog/dialog.component';
 
 @Component({
   selector: 'app-update-koresp',
@@ -48,6 +50,7 @@ export class UpdateKorespComponent implements OnInit, OnDestroy {
               private store: Store<AdminState>,
               private uslugaService: UslugaService,
               private router: Router,
+              private dialog: MatDialog,
               private route: ActivatedRoute) {
                 this.route.data.subscribe(data => {
                   this.koresp = data.koresp;
@@ -203,6 +206,42 @@ export class UpdateKorespComponent implements OnInit, OnDestroy {
       koresp
     }));
     this.router.navigate(['/Admin', 'pregledUsluge', this.usluga.korisnik, this.uslugaId]);
+  }
+
+  deleteDostDok(dostDokId: string) {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      data: {
+        question: 'dostavljeni dokument'
+      }
+    });
+    dialogRef.afterClosed().subscribe(res => {
+      if (res) {
+        this.store.dispatch(new DeleteDostDokAction({
+          uslugaId: this.uslugaId,
+          korespId: this.korespId,
+          dostDokId
+        }));
+        this.router.navigate(['/Admin', 'pregledUsluge', this.usluga.korisnik, this.uslugaId]);
+      }
+    });
+  }
+
+  deletePripAkt(pripAktId: string) {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      data: {
+        question: 'pravni akt'
+      }
+    });
+    dialogRef.afterClosed().subscribe(res => {
+      if (res) {
+        this.store.dispatch(new DeletePripAktAction({
+          uslugaId: this.uslugaId,
+          korespId: this.korespId,
+          pravniAktId: pripAktId
+        }));
+        this.router.navigate(['/Admin', 'pregledUsluge', this.usluga.korisnik, this.uslugaId]);
+      }
+    });
   }
 
   ngOnDestroy() {

@@ -10,7 +10,13 @@ span{
   align-self: center;
 }
 a{
-  display: flex;
+  display: inline-flex;
   text-decoration: none;
   color: #3F51B5;
+  font-weight: bold;
+  margin-right: 20px;
+}
+
+.podaci{
+  font-weight: 500;
 }

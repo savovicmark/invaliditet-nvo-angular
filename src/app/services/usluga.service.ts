@@ -52,4 +52,20 @@ export class UslugaService {
       koresp
     });
   }
+
+  deleteDostDok(uslugaId: string, korespId: string, dostDokId): Observable<UslugaModel> {
+    return this.http.patch<UslugaModel>(`${this.baseUrl}/usluga/deleteDostDok`, {
+      uslugaId,
+      korespId,
+      dostDokId
+    });
+  }
+
+  deletePripAkt(uslugaId: string, korespId: string, pravniAktId): Observable<UslugaModel> {
+    return this.http.patch<UslugaModel>(`${this.baseUrl}/usluga/deletePripAkt`, {
+      uslugaId,
+      korespId,
+      pravniAktId
+    });
+  }
 }

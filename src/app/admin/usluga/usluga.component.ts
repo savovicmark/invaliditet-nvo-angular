@@ -76,7 +76,7 @@ export class UslugaComponent implements OnInit {
     console.log(file);
     this.dialog.open(ViewDocComponent, {
       data: {
-        url: `https://fast-snail-20.localtunnel.me/tunelzalocalhost->/files/${file}`
+        url: `https://lucky-skunk-70.localtunnel.me/files/${file}`
       },
       width: '100vw',
       height: '100vh'

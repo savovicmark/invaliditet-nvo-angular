@@ -3,30 +3,56 @@
     <mat-expansion-panel>
       <mat-expansion-panel-header collapsedHeight="70px" expandedHeight="70px">
         <mat-panel-title>
-          Ime, prezime, godina rodjenja
+          Ime, prezime, datum rodjenja
         </mat-panel-title>
         <mat-panel-description>
           {{korisnik?.ime}} {{korisnik?.prezime}} {{korisnik?.datumRodjenja | date: "dd/MM/yyyy"}}
         </mat-panel-description>
       </mat-expansion-panel-header>
-      <div fxLayout fxLayoutAlign="center">
-        <div fxLayout="column" fxFlex="40%">
-          <p  *ngIf="korisnik.mjestoRodjenja">Mjesto rodjenja:</p>
-          <p *ngIf="korisnik.mjestoStanovanja">Mjesto stanovanja:</p>
-          <p *ngIf="korisnik.adresa">Adresa:</p>
-          <p *ngIf="korisnik.telefon">Telefon:</p>
-        </div>
-        <div fxLayout="column" fxFlex="40%">
-          <p  *ngIf="korisnik.mjestoRodjenja">{{korisnik?.mjestoRodjenja}}</p>
-          <p *ngIf="korisnik.mjestoStanovanja">{{korisnik?.mjestoStanovanja}}</p>
-          <p *ngIf="korisnik.adresa">{{korisnik?.adresa}}</p>
-          <p *ngIf="korisnik.telefon">{{korisnik?.telefon}}</p>
-        </div>
+      <div fxLayout="column">
+            <div fxLayout fxLayoutAlign="start center"  fxFlex="100%">
+                <p fxFlex ="40%"  fxLayout fxLayoutAlign="start center" fxLayoutGap="5px">
+                    <mat-icon>house</mat-icon>
+                    <span>Mjesto rodjenja:</span>
+                </p>
+                <p class="podaci" *ngIf="korisnik?.mjestoRodjenja; else na">{{korisnik?.mjestoRodjenja | uppercase}}</p>
+            </div>
+            <div fxLayout fxLayoutAlign="start center" >
+                <p fxFlex ="40%"  fxLayout fxLayoutAlign="start center" fxLayoutGap="5px">
+                    <mat-icon>location_city</mat-icon>
+                    <span>Mjesto stanovanja:</span>
+                </p>
+                <p class="podaci" *ngIf="korisnik?.mjestoStanovanja; else na">{{korisnik?.mjestoStanovanja | uppercase}}</p>
+            </div>
+            <div fxLayout fxLayoutAlign="start center" >
+                <p fxFlex="40%" fxLayout fxLayoutAlign="start center" fxLayoutGap="5px">
+                    <mat-icon>my_location</mat-icon>
+                    <span>Adresa:</span>
+                </p>
+                <p class="podaci" *ngIf="korisnik?.adresa; else na">{{korisnik?.adresa | uppercase}}</p>
+            </div>
+            <div fxLayout fxLayoutAlign="start center" >
+                <p fxFlex="40%" fxLayout fxLayoutAlign="start center" fxLayoutGap="5px">
+                    <mat-icon>perm_identity</mat-icon>
+                    <span>JMBG:</span>
+                </p>
+                <p class="podaci" *ngIf="korisnik?.JMBG; else na">{{korisnik?.JMBG}}</p>
+            </div>
+            <div fxLayout fxLayoutAlign="start center" >
+                <p fxFlex="40%" fxLayout fxLayoutAlign="start center" fxLayoutGap="5px">
+                    <mat-icon>phone_android</mat-icon>
+                    <span>Telefon:</span>
+                </p>
+                <p class="podaci" *ngIf="korisnik?.telefon; else na">{{korisnik?.telefon}}</p>
+            </div>
       </div>
       <mat-action-row>
           <a [routerLink]="['/Admin', 'korisnik', korisnik._id]"><span>Pregledaj korisnika</span> <mat-icon>double_arrow</mat-icon> </a>
       </mat-action-row>
     </mat-expansion-panel>
   </mat-accordion>
+  <ng-template #na>
+      <p class="podaci">N/A</p>
+  </ng-template>
 </section>
 

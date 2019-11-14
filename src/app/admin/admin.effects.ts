@@ -17,8 +17,12 @@ import { AdminActionTypes,
         KorisnikUpdatedAction,
         UpdateKorespondencijaAction,
         GetUslugaByIdAction,
-        UslugaByIdLoadedAction} from './admin.actions';
-import { map, mergeMap, switchMap, withLatestFrom, filter, exhaustMap } from 'rxjs/operators';
+        UslugaByIdLoadedAction,
+        DostDokDeletedAction,
+        DeleteDostDokAction,
+        DeletePripAktAction,
+        PripAktDeletedAction} from './admin.actions';
+import { map, mergeMap, switchMap, withLatestFrom, filter, exhaustMap, tap } from 'rxjs/operators';
 import { KorisnikService } from '../services/korisnik.service';
 import { Korisnik } from '../Models/korisnik.model';
 import { Store, select } from '@ngrx/store';
@@ -26,6 +30,8 @@ import { selectAllKorisniciLoaded, selectKorisnikById } from './admin.selectors'
 import { UslugaService } from '../services/usluga.service';
 import { Update } from '@ngrx/entity';
 import { UslugaModel } from '../Models/usluga.model';
+import { ChangeDetectionStrategy } from '@angular/compiler/src/core';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class AdminEffects {
@@ -33,6 +39,7 @@ export class AdminEffects {
   constructor(private actions$: Actions,
               private korisnikService: KorisnikService,
               private uslugaService: UslugaService,
+              private router: Router,
               private store: Store<any>
               ) {}
 
@@ -40,6 +47,7 @@ export class AdminEffects {
   postKorisnik$ = this.actions$.pipe(
     ofType<PostKorisnikAction>(AdminActionTypes.PostKorisnik),
     switchMap(action => this.korisnikService.postKorisnik(action.payload.korisnik).pipe(
+      tap(korisnik => this.router.navigate(['/Admin', 'korisnik', korisnik._id])),
       map((korisnik: any) => new KorisnikPostedAction({korisnik}))
     ))
   );
@@ -132,6 +140,41 @@ export class AdminEffects {
       ofType<GetUslugaByIdAction>(AdminActionTypes.GetUslugaById),
       mergeMap(action => this.uslugaService.getUslugaById(action.payload.uslugaId).pipe(
         map(usluga => new UslugaByIdLoadedAction({usluga}))
+      ))
+    );
+
+    @Effect()
+    deleteDostDok$ = this.actions$.pipe(
+      ofType<DeleteDostDokAction>(AdminActionTypes.DeleteDostDok),
+      exhaustMap(action => this.uslugaService.deleteDostDok(
+        action.payload.uslugaId,
+        action.payload.korespId,
+        action.payload.dostDokId).pipe(
+          map(usluga => {
+            const uslugaUpdate: Update<UslugaModel> = {
+              id: usluga._id,
+              changes: usluga
+            };
+            return new DostDokDeletedAction({usluga: uslugaUpdate});
+          })
+        ))
+    );
+
+    @Effect()
+    deletePripAkt$ = this.actions$.pipe(
+      ofType<DeletePripAktAction>(AdminActionTypes.DeletePripAkt),
+      exhaustMap(action => this.uslugaService.deletePripAkt(
+        action.payload.uslugaId,
+        action.payload.korespId,
+        action.payload.pravniAktId
+      ).pipe(
+        map(usluga => {
+          const updateUsluga: Update<UslugaModel> = {
+            id: usluga._id,
+            changes: usluga
+          };
+          return new PripAktDeletedAction({usluga: updateUsluga});
+        })
       ))
     );
 

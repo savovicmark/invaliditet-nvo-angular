@@ -22,6 +22,13 @@
               </p>
               <p class="podaci">{{(korisnik | async)?.mjestoStanovanja | uppercase}}</p>
           </div>
+          <div fxLayout fxLayoutAlign="start center" *ngIf="(korisnik | async)?.starosnaDob">
+              <p fxFlex="40%" fxLayout fxLayoutAlign="start center" fxLayoutGap="5px">
+                  <mat-icon>today</mat-icon>
+                  <span>Starosna dob:</span>
+              </p>
+              <p class="podaci" fxFlex="40%">{{(korisnik | async)?.starosnaDob}}</p>
+          </div>
           <div fxLayout fxLayoutAlign="start center" *ngIf="(korisnik | async)?.JMBG">
               <p fxFlex="40%" fxLayout fxLayoutAlign="start center" fxLayoutGap="5px">
                   <mat-icon>perm_identity</mat-icon>

@@ -6,6 +6,7 @@ import { KorisnikService } from '../../services/korisnik.service';
 import { Store } from '@ngrx/store';
 import { PostKorisnikAction } from '../admin.actions';
 import { AdminState } from '../admin.reducers';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-korisnik',
@@ -71,6 +72,7 @@ export class KorisnikPostComponent implements OnInit {
   korisnikForm: FormGroup;
 
   constructor(private fb: FormBuilder,
+              private router: Router,
               private store: Store<AdminState>) {}
 
   ngOnInit() {
@@ -142,6 +144,7 @@ export class KorisnikPostComponent implements OnInit {
     // const korisnik = this.korisnikForm.value;
     // delete korisnik.checkedForm;
     this.store.dispatch(new PostKorisnikAction({korisnik}));
+    // this.router.navigate(['/Admin', 'Svi korisnici']);
   }
 
 }

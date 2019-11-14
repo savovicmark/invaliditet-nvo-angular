@@ -18,13 +18,44 @@ export interface UslugaState extends EntityState<UslugaModel> {
 }
 
 export const adapter: EntityAdapter<Korisnik> =  createEntityAdapter<Korisnik>({
-  selectId: korisnik => korisnik._id
+  selectId: korisnik => korisnik._id,
+  sortComparer: compareKorisnikByLastName
 });
 
+// ==========================comparer===============================
+export function compareKorisnikByLastName(korOne: Korisnik, korTwo: Korisnik) {
+  if (korOne.prezime > korTwo.prezime) {
+    return 1;
+  } else if (korOne.prezime < korTwo.prezime) {
+    return -1;
+  } else {
+    if (korOne.ime > korTwo.ime) {
+      return 1;
+    } else if (korOne.ime < korTwo.ime) {
+      return -1;
+    } else {
+      return 0;
+    }
+  }
+}
+// ==============================================================================
 export const uslugaAdapter: EntityAdapter<UslugaModel> = createEntityAdapter<UslugaModel>({
-  selectId: usluga => usluga._id
+  selectId: usluga => usluga._id,
+  sortComparer: compareUslugeByDate
 });
-
+// ==================================================================================
+export function compareUslugeByDate(usl1: UslugaModel, usl2: UslugaModel) {
+  if (usl1.korespondencije[0].datumUpucivanjaZahtjeva && usl2.korespondencije[0].datumUpucivanjaZahtjeva) {
+    if (usl1.korespondencije[0].datumUpucivanjaZahtjeva > usl2.korespondencije[0].datumUpucivanjaZahtjeva) {
+      return -1;
+    } else if (usl1.korespondencije[0].datumUpucivanjaZahtjeva < usl2.korespondencije[0].datumUpucivanjaZahtjeva) {
+      return 1;
+    }
+  } else {
+    return 0;
+  }
+}
+// ========================================================================================
 export const korisnikInitialState: KorisnikState = adapter.getInitialState({
   loaded: false
 });
@@ -59,6 +90,8 @@ export function uslugeReducer(state = uslugeInitialState, action: korisnikAction
     case korisnikActions.AdminActionTypes.UslugaByIdLoaded:
       return uslugaAdapter.addOne(action.payload.usluga, state);
     case korisnikActions.AdminActionTypes.UslugaUpdated:
+    case korisnikActions.AdminActionTypes.DostDokDeleted:
+    case korisnikActions.AdminActionTypes.PripAktDeleted:
       return uslugaAdapter.updateOne(action.payload.usluga, state);
       default: {
         return state;
