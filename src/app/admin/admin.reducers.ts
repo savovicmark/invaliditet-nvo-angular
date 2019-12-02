@@ -7,6 +7,14 @@ import { AppState } from '../main/main.reducers';
 export interface AdminState extends AppState {
   korisnici: KorisnikState;
   usluge: UslugaState;
+  pitanje: string;
+  vrstaPomoci: string;
+  korisnikSort: {
+    invaliditet: string,
+    sposobnost: string,
+    zaposlenje: string,
+    obrazovanje: string
+  };
 }
 // ts-lint:disable
 export interface KorisnikState extends EntityState<Korisnik> {
@@ -76,6 +84,9 @@ export function korisnikReducer(state = korisnikInitialState, action: korisnikAc
     case korisnikActions.AdminActionTypes.KorisnikUpdated:
       return adapter.updateOne(action.payload.korisnik, state);
 
+    case korisnikActions.AdminActionTypes.KorisnikDeleted:
+      return adapter.removeOne(action.payload.korisnik._id, state);
+
     default: {
       return state;
     }
@@ -98,6 +109,50 @@ export function uslugeReducer(state = uslugeInitialState, action: korisnikAction
       }
   }
 }
+
+export function pitanjeReducer(state = '', action: korisnikActions.AdminActions) {
+  switch (action.type) {
+    case korisnikActions.AdminActionTypes.PitanjePomocChange:
+      return action.payload;
+      default: {
+        return state;
+      }
+  }
+}
+
+export function vrstaPomociReducer(state = '', action: korisnikActions.AdminActions) {
+  switch (action.type) {
+    case korisnikActions.AdminActionTypes.VrstaPomocChange:
+      return action.payload;
+      default: {
+        return state;
+      }
+  }
+}
+
+export const initialKorisnikSortState = {
+  invaliditet: '',
+  zaposlenje: '',
+  obrazovanje: '',
+  sposobnost: ''
+};
+
+export function korisnikSortReducer(state = initialKorisnikSortState, action: korisnikActions.AdminActions) {
+  switch (action.type) {
+    case korisnikActions.AdminActionTypes.InvaliditetChange:
+      return {...state, invaliditet: action.payload};
+    case korisnikActions.AdminActionTypes.SposobnostChange:
+      return {...state, sposobnost: action.payload};
+    case korisnikActions.AdminActionTypes.ZaposlenjeChange:
+      return {...state, zaposlenje: action.payload};
+    case korisnikActions.AdminActionTypes.ObrazovanjeChange:
+      return {...state, obrazovanje: action.payload};
+    default: {
+        return state;
+      }
+  }
+}
+
 
 export const {
   selectAll,

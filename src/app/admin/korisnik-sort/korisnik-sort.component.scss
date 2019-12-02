@@ -1,0 +1,35 @@
+section{
+  margin: 60px auto 0px auto;
+  width: 80%;
+  @media screen and (max-width: 600px){
+    width: 100%;
+  }
+}
+
+span{
+  align-self: center;
+}
+a{
+  display: inline-flex;
+  text-decoration: none;
+  color: #3F51B5;
+  font-weight: bold;
+  margin-right: 20px;
+}
+
+.podaci{
+  font-weight: 500;
+}
+ mat-form-field{
+   width: 50%;
+   @media screen and (max-width: 600px){
+    width: 100%;
+  }
+ }
+ .margin{
+   margin-bottom: 30px;
+ }
+
+ mat-card-title{
+   margin-bottom: 40px;
+ }

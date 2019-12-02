@@ -174,7 +174,7 @@
           </div>
       </div>
     </mat-card-content>
-    <mat-card-actions fxLayout>
+    <mat-card-actions fxLayout fxLayout.xs="column">
       <button mat-button color="primary" (click)="navigateToAddUsluga()" fxLayout fxLayoutAlign="center center">
         <mat-icon>plus_one</mat-icon>
         <span class="button">Dodaj uslugu</span>
@@ -183,10 +183,13 @@
         <mat-icon>find_replace</mat-icon>
         Izmijeni podatke o korisniku
       </button>
-      <button mat-button class="button" isIconButton="true" color="accent" fxLayout fxLayoutAlign="center center">
-          <mat-icon>warning</mat-icon>
-          Izbrisi korisnika
-      </button>
+      <ng-container *ngIf="(korisnik | async) as koris">
+        <button mat-button class="button" isIconButton="true" color="accent"
+          fxLayout fxLayoutAlign="center center" (click)="deleteKorisnik(koris._id)">
+            <mat-icon>warning</mat-icon>
+            Izbrisi korisnika
+        </button>
+      </ng-container>
     </mat-card-actions>
   </mat-card>
   <ng-template #na>

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Korisnik } from '../Models/korisnik.model';
@@ -29,6 +29,12 @@ export class KorisnikService {
 
   updateKorisnik(korisnikId: string, korisnik: Korisnik): Observable<Korisnik> {
     return this.http.patch<Korisnik>(`${this.baseUrl}/korisnik`, {korisnikId, korisnik});
+  }
+
+  deleteKorisnik(id: string): Observable<Korisnik> {
+    return this.http.delete<Korisnik>(`${this.baseUrl}/korisnik/removeKorisnik`, {
+      params: new HttpParams().set('id', id)
+    });
   }
 
 }

@@ -21,7 +21,9 @@ import { AdminActionTypes,
         DostDokDeletedAction,
         DeleteDostDokAction,
         DeletePripAktAction,
-        PripAktDeletedAction} from './admin.actions';
+        PripAktDeletedAction,
+        DeleteKorisnikAction,
+        KorisnikDeletedAction} from './admin.actions';
 import { map, mergeMap, switchMap, withLatestFrom, filter, exhaustMap, tap } from 'rxjs/operators';
 import { KorisnikService } from '../services/korisnik.service';
 import { Korisnik } from '../Models/korisnik.model';
@@ -175,6 +177,15 @@ export class AdminEffects {
           };
           return new PripAktDeletedAction({usluga: updateUsluga});
         })
+      ))
+    );
+
+    @Effect()
+    deleteKorisnik$ = this.actions$.pipe(
+      ofType<DeleteKorisnikAction>(AdminActionTypes.DeleteKorisnik),
+      exhaustMap(action => this.korisnikService.deleteKorisnik(action.payload.id).pipe(
+        map(korisnik => new KorisnikDeletedAction({korisnik})),
+        tap(() => this.router.navigate(['/Admin', 'Svi korisnici']))
       ))
     );
 

@@ -9,7 +9,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './root/app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { LayoutModule } from '@angular/cdk/layout';
 import { NavItemComponent } from './nav-item/nav-item.component';
@@ -20,12 +19,14 @@ import { environment } from 'src/environments/environment';
 import { CustomSerializer } from './services/router-store';
 import { Routes, RouterModule } from '@angular/router';
 import { AllKorisnikComponent } from './admin/all-korisnik/all-korisnik.component';
+import { KorisnikSearchComponent } from './korisnik-search/korisnik-search.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavItemComponent
+    NavItemComponent,
+    KorisnikSearchComponent
   ],
   imports: [
     BrowserModule,
@@ -35,7 +36,6 @@ import { AllKorisnikComponent } from './admin/all-korisnik/all-korisnik.componen
     RouterModule.forRoot([], {scrollPositionRestoration: 'enabled'}),
     BrowserAnimationsModule,
     MaterialModule,
-    FontAwesomeModule,
     FlexLayoutModule,
     LayoutModule,
     HttpClientModule,
@@ -61,6 +61,7 @@ import { AllKorisnikComponent } from './admin/all-korisnik/all-korisnik.componen
     StoreRouterConnectingModule.forRoot({stateKey: 'router', serializer: CustomSerializer})
   ],
   providers: [],
+  entryComponents: [KorisnikSearchComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

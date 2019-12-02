@@ -1,9 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {faFacebook, faInstagram, faTwitter, faYoutube} from '@fortawesome/free-brands-svg-icons';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
-import { MatSidenav } from '@angular/material';
+import { MatSidenav, MatDialog } from '@angular/material';
 import { Router, NavigationEnd } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { FormControl, FormGroup } from '@angular/forms';
+import { KorisnikSearchComponent } from '../korisnik-search/korisnik-search.component';
+import { debounceTime, distinctUntilChanged, switchMap, filter, exhaustMap } from 'rxjs/operators';
+import { SearchService } from '../services/search.service';
+import { Korisnik } from '../Models/korisnik.model';
 
 @Component({
   selector: 'app-root',
@@ -13,16 +17,26 @@ import { Subscription } from 'rxjs';
 export class AppComponent implements OnInit {
   @ViewChild('sidenav', {static: true}) sidenav: MatSidenav;
   title = 'mibokefront';
-  faFacebook = faFacebook;
-  faInstagram = faInstagram;
-  faTwitter = faTwitter;
-  faYoutube = faYoutube;
+  searchForm = new FormGroup({
+    userFirstName: new FormControl(''),
+    userLastName: new FormControl('')
+  });
+  korisnici: Korisnik[] | [] = [];
 
-  constructor(public breakpiontObserver: BreakpointObserver, private router: Router) {
+
+  constructor(public breakpiontObserver: BreakpointObserver,
+              private router: Router,
+              public dialog: MatDialog,
+              private searchService: SearchService) {
 
   }
 
   ngOnInit() {
+    this.searchForm.valueChanges.pipe(
+      debounceTime(400),
+      filter(value => value.userFirstName || value.userLastName),
+      exhaustMap(value => this.searchService.searchKorisnik(value.userFirstName, value.userLastName))
+    ).subscribe(korisnici => this.korisnici = korisnici);
     this.breakpiontObserver
       .observe(['(max-width: 599px)'])
       .subscribe((state: BreakpointState) => {
@@ -36,4 +50,18 @@ export class AppComponent implements OnInit {
       }
     });
   }
+
+  openSearchKomp() {
+   const dialogRef = this.dialog.open(KorisnikSearchComponent, {
+      height: '90vh',
+      width: '70vw',
+      data: {
+        korisnici: this.korisnici
+      }
+    });
+   console.log(this.korisnici);
+   dialogRef.afterClosed().subscribe(() => this.korisnici = []);
+   this.searchForm.reset();
+  }
+
 }

@@ -82,5 +82,38 @@ export const selectUslugaById = (id: string) => createSelector(
 
 export const selectKorespondencijaById = (uslugaId: string, korespId: string) => createSelector(
   selectUslugaById(uslugaId),
-  usluga => (usluga.korespondencije as KorespondencijaModel[]).filter(usl => usl._id === korespId)
+  usluga => { if (usluga) {
+    return (usluga.korespondencije as KorespondencijaModel[]).filter(usl => usl._id === korespId);
+  }
+ }
+);
+
+export const selectPitanjePomoc = createSelector(
+  selectAdminState,
+  adminState => adminState.pitanje
+);
+
+export const selectVrstaPomoc = createSelector(
+  selectAdminState,
+  adminState => adminState.vrstaPomoci
+);
+
+export const selectInvaliditet = createSelector(
+  selectAdminState,
+  adminState => adminState.korisnikSort.invaliditet
+);
+
+export const selectSposobnost = createSelector(
+  selectAdminState,
+  adminState => adminState.korisnikSort.sposobnost
+);
+
+export const selectZaposlenje = createSelector(
+  selectAdminState,
+  adminState => adminState.korisnikSort.zaposlenje
+);
+
+export const selectObrazovanje = createSelector(
+  selectAdminState,
+  adminState => adminState.korisnikSort.obrazovanje
 );

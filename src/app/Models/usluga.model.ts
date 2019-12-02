@@ -23,9 +23,15 @@ export interface KorespondencijaModel {
   rezultatPruzenePomoci?: string;
 }
 
+export interface KorisnikUsluga {
+  _id?: string;
+  ime: string;
+  prezime: string;
+}
+
 export interface UslugaModel {
   _id?: string;
-  korisnik: string;
+  korisnik: string | KorisnikUsluga;
   korespondencije: KorespondencijaModel[] | KorespondencijaModel;
 }
 

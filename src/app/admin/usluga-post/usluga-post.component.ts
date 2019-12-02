@@ -9,6 +9,7 @@ import { PostKorespondencijaAction, PostUslugaAction } from '../admin.actions';
 import { selectKorisnikId } from 'src/app/main/main.reducers';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
+import { PitanjeZaKojeJeTrazenaPomoc } from 'src/app/Models/pitanja.model';
 
 @Component({
   selector: 'app-usluga-post',
@@ -35,14 +36,7 @@ export class UslugaPostComponent implements OnInit, OnDestroy {
     'fiksni telefon', 'mobilni telefon', 'mobilni telefon zaposlenog/e',
     'mail', 'facebook', 'instagram', 'twitter', 'licno'
   ];
-  pitanja: string[]; /*[// ovo ce mozda ic sa bekenda
-    'besplatna pravna pomoc', 'usluge socijalne i djecje zastite',
-    'pristupacan prevoz', 'prava iz socijalne i djecje zastite',
-    'prava na profesionalnu rehabilitaciju i zaposljavanje',
-    'pravo na zastitu od diskriminacije', 'pravo na dodatak za njegu i pomoc',
-    'pravo na licnu invalidninu', 'pravo na utvrdjivanje procenta invaliditeta',
-    'pravo na zaštitu od diskriminacije po osnovu invaliditeta u oblasti zdravlja'
-  ];*/
+  pitanja: PitanjeZaKojeJeTrazenaPomoc[];
   bespPomoc = ['pravno obavjestenje', 'pravni savjet', 'zastupanje', 'posredovanje/medijacija'];
   socZast = ['personalna asistencija', 'pomoc u kuci', 'savjetodavno-terapijske'];
 
@@ -89,13 +83,17 @@ export class UslugaPostComponent implements OnInit, OnDestroy {
 
   addPravnaAkta(): FormGroup {
     return this.fb.group({
-      opis: [null]
+      opis: [null],
+      datum: [null],
+      broj: ['']
     });
   }
 
   addDokument(): FormGroup {
     return this.fb.group({
-      opis: [null]
+      opis: [null],
+      datum: [null],
+      broj: ['']
     });
   }
 
@@ -109,7 +107,7 @@ export class UslugaPostComponent implements OnInit, OnDestroy {
   dodajPitanje(): void {
     const pitanje = this.uslugaForm.get('novoPitanje').value;
     this.uslugaService.postVrstaPomoci({vrstaPomoci: pitanje}).subscribe(novoPit => {
-      this.pitanja = [...this.pitanja, novoPit.vrstaPomoci];
+      this.pitanja = [...this.pitanja, novoPit];
       this.uslugaForm.get('novoPitanje').reset();
     });
   }
@@ -138,14 +136,14 @@ export class UslugaPostComponent implements OnInit, OnDestroy {
   submitUsluga() {
     const dostDok: Dokument[] | [] = [];
     this.dokuments.value.forEach((el, index) => {
-      dostDok[index] = {...dostDok[index], opis: el.opis};
+      dostDok[index] = {...dostDok[index], opis: el.opis, datum: el.datum, broj: el.broj};
     });
     this.docs.forEach((el, index) => {
       dostDok[index] = {...dostDok[index], file: el};
     });
     const pripAkta: Dokument[] | [] = [];
     this.pravnaAkta.value.forEach((el, index) => {
-      pripAkta[index] = {...pripAkta[index], opis: el.opis};
+      pripAkta[index] = {...pripAkta[index], opis: el.opis, datum: el.datum, broj: el.broj};
     });
     this.dostPravniAkti.forEach((el, index) => {
       pripAkta[index] = {...pripAkta[index], file: el};

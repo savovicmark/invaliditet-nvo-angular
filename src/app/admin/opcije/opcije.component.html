@@ -1,0 +1,67 @@
+<section>
+  <h3>Opcije za Pitanje za koje je trazena pomoc:</h3>
+  <mat-list>
+    <mat-list-item *ngFor="let pitanje of vrstaPitanja">
+      <p>{{pitanje.vrstaPomoci}}</p>
+      <button mat-icon-button (click)="deleteVrstaPitanja(pitanje._id)">
+        <mat-icon>delete_forever</mat-icon>
+      </button>
+      <mat-divider></mat-divider>
+    </mat-list-item>
+  </mat-list>
+  <div fxLayout fxLayoutGap="20px" fxLayoutAlign="start center">
+    <mat-form-field>
+      <mat-label>Dodaj Pitanje za koje je trazena pomoc</mat-label>
+      <input type="text" matInput [formControl]="inputVrstaPitanja">
+    </mat-form-field>
+    <button mat-icon-button (click)="postVrstaPitanja()">
+      <mat-icon>
+        add_circle
+      </mat-icon>
+    </button>
+  </div>
+  <mat-divider></mat-divider>
+  <h3>Opcije za Besplatna pravna pomoc:</h3>
+  <mat-list>
+    <mat-list-item *ngFor="let pomoc of besplatnaPomoc">
+      <p>{{pomoc.bespPomoc}}</p>
+      <button mat-icon-button (click)="deleteBespPomoc(pomoc._id)">
+        <mat-icon>delete_forever</mat-icon>
+      </button>
+      <mat-divider></mat-divider>
+    </mat-list-item>
+  </mat-list>
+  <div fxLayout fxLayoutGap="20px" fxLayoutAlign="start center">
+      <mat-form-field>
+        <mat-label>Dodaj Besplatna pravna pomoc</mat-label>
+        <input type="text" matInput [formControl]="inputBesplatnaPomoc">
+      </mat-form-field>
+      <button mat-icon-button (click)="postBespPomoc()">
+        <mat-icon>
+          add_circle
+        </mat-icon>
+      </button>
+    </div>
+    <mat-divider></mat-divider>
+  <h3>Opcije za Usluge socijalne zastite:</h3>
+  <mat-list>
+    <mat-list-item *ngFor="let socZast of socijalnaZastita">
+      <p>{{socZast.socZastita}}</p>
+      <button mat-icon-button (click)="deleteSocZastita(socZast._id)">
+        <mat-icon>delete_forever</mat-icon>
+      </button>
+      <mat-divider></mat-divider>
+    </mat-list-item>
+  </mat-list>
+  <div fxLayout fxLayoutGap="20px" fxLayoutAlign="start center">
+      <mat-form-field>
+        <mat-label>Dodaj Usluge socijalne zastite</mat-label>
+        <input type="text" matInput [formControl]="inputSocijalnaZastita">
+      </mat-form-field>
+      <button mat-icon-button (click)="postSocZastita()">
+        <mat-icon>
+          add_circle
+        </mat-icon>
+      </button>
+  </div>
+</section>

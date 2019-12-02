@@ -4,43 +4,62 @@
       <mat-icon>menu</mat-icon>
     </button>
   </div>
-  <div fxFlex fxLayout fxLayoutAlign="end">
-    <fa-icon [icon]="faFacebook" size="lg"></fa-icon>
-    <fa-icon [icon]="faInstagram" size="lg"></fa-icon>
-    <fa-icon [icon]="faTwitter" size="lg"></fa-icon>
-    <fa-icon [icon]="faYoutube" size="lg"></fa-icon>
+  <div fxFlex fxLayout fxLayoutAlign="end center" fxLayoutGap="10px">
+    <div fxHide.xs fxLayout fxLayoutAlign="start center"><mat-icon>youtube_searched_for</mat-icon>&nbsp;Pretrazi korisnike : </div>
+    <form [formGroup]="searchForm" fxLayout fxLayoutGap="5px">
+      <mat-form-field>
+        <mat-label>
+            Ime
+        </mat-label>
+        <input type="text" matInput formControlName="userFirstName" >
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>
+            Prezime
+        </mat-label>
+        <input type="text" matInput formControlName="userLastName" >
+    </mat-form-field>
+    </form>
+
+  <button mat-icon-button aria-label="pretrazi korisnika" (click)="openSearchKomp()">
+    <mat-icon>search</mat-icon>
+  </button>
   </div>
 </mat-toolbar>
 <mat-sidenav-container>
   <mat-sidenav #sidenav role="navigation" fixedInViewport="true" fixedTopGap="59">
-    <mat-nav-list>
-      <mat-list-item>
-          <a [routerLink]="['/Naslovna']"  >Naslovna</a>
+    <mat-nav-list disableRipple="true">
+      <mat-divider></mat-divider>
+      <mat-list-item [routerLink]="['/Admin']" fxLayout fxLayoutAlign="start center" fxLayoutGap="20px">
+        <mat-icon>apps</mat-icon>
+        <a>&nbsp;Admin</a>
       </mat-list-item>
       <mat-divider></mat-divider>
-      <app-nav-item
-      [title]="'O nama'" [links]="['Osnivaci', 'Unutrasnja organizacija', 'Tim', 'Mi Boke']">
-      </app-nav-item>
-      <mat-divider></mat-divider>
-      <app-nav-item
-      [title]="'Projekti'" [links]="['Projekti u realizaciji', 'Realizovani projekti']">
-      </app-nav-item>
-      <mat-divider></mat-divider>
-      <app-nav-item
-      [title]="'Dokumenti i publikacije'" [links]="['Opsta akta', 'Mi Boke', 'Planovi i izvjestaj o radu', 'Izdati materijal']">
-      </app-nav-item>
-      <mat-divider></mat-divider>
-      <mat-list-item>
-          <a [routerLink]="['/Partneri']">Partneri</a>
+      <mat-list-item [routerLink]="['/Admin/Svi korisnici']"  fxLayout fxLayoutAlign="start center" fxLayoutGap="20px">
+        <mat-icon>verified_user</mat-icon>
+        <a>&nbsp;Svi Korisnici</a>
       </mat-list-item>
       <mat-divider></mat-divider>
-      <mat-list-item>
-          <a [routerLink]="['/Donatori']">Donatori i sponzori</a>
+      <mat-list-item [routerLink]="['/Admin/Dodaj korisnika']" fxLayout fxLayoutAlign="start center" fxLayoutGap="20px">
+        <mat-icon>add_circle</mat-icon>
+       <a>&nbsp;Dodaj Korisnika</a>
       </mat-list-item>
       <mat-divider></mat-divider>
-      <app-nav-item
-      [title]="'Admin'" [links]="['Svi korisnici', 'Dodaj korisnika']">
-      </app-nav-item>
+      <mat-list-item [routerLink]="['/Usluge']" fxLayout fxLayoutAlign="start center" fxLayoutGap="20px">
+        <mat-icon>unarchive</mat-icon>
+        <a>&nbsp;Usluge</a>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item [routerLink]="['/Korisnici']" fxLayout fxLayoutAlign="start center" fxLayoutGap="20px">
+        <mat-icon>people</mat-icon>
+        <a>&nbsp;Korisnici</a>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item [routerLink]="['/Opcije']" fxLayout fxLayoutAlign="start center" fxLayoutGap="20px">
+        <mat-icon>settings_applications</mat-icon>
+        <a>&nbsp;Podesavanja</a>
+      </mat-list-item>
+      <mat-divider></mat-divider>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>

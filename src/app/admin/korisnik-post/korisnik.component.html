@@ -1,5 +1,5 @@
 <section fxLayout fxLayoutAlign="center center">
-  <form fxFlex fxLayout="column" [formGroup]="korisnikForm" (ngSubmit)="submitForm()">
+  <form fxFlex="100%" fxLayout="column" [formGroup]="korisnikForm" (ngSubmit)="submitForm()">
     <mat-form-field color="primary">
       <mat-label>
         Ime korisnika
@@ -45,9 +45,9 @@
       <mat-label>
         Datum rodjenja
       </mat-label>
-        <input matInput [matDatepicker]="picker" [max]="today" formControlName="birthDate">
+        <input matInput [matDatepicker]="picker" [max]="today" disabled="true" formControlName="birthDate">
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker startView="year"></mat-datepicker>
+        <mat-datepicker #picker disabled="false" startView="multi-year"></mat-datepicker>
     </mat-form-field>
     <mat-form-field>
         <mat-label>

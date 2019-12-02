@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import { UslugaModel, KorespondencijaModel } from '../Models/usluga.model';
 import { UslugaPostedAction } from '../admin/admin.actions';
+import { PitanjeZaKojeJeTrazenaPomoc, BesplatnaPravnaPomoc, UslugeSocZastite } from '../Models/pitanja.model';
 
 @Injectable({
   providedIn: 'root'
@@ -22,12 +23,18 @@ export class UslugaService {
     return this.http.post(`${this.baseUrl}/usluga`, usluga);
   }
 
-  getVrstePomoci(): Observable<string[]> {
-    return this.http.get<string[]>(`${this.baseUrl}/vrstaPomoci`);
+  getVrstePomoci(): Observable<PitanjeZaKojeJeTrazenaPomoc[]> {
+    return this.http.get<PitanjeZaKojeJeTrazenaPomoc[]>(`${this.baseUrl}/pitanja/vrstaPomoci`);
   }
 
-  postVrstaPomoci(vrsta: {vrstaPomoci: string}): Observable<{vrstaPomoci: string}> {
-    return this.http.post<{vrstaPomoci: string}>(`${this.baseUrl}/vrstaPomoci`, vrsta);
+  postVrstaPomoci(vrsta: {vrstaPomoci: string}): Observable<PitanjeZaKojeJeTrazenaPomoc> {
+    return this.http.post<PitanjeZaKojeJeTrazenaPomoc>(`${this.baseUrl}/pitanja/vrstaPomoci`, vrsta);
+  }
+
+  deleteVrstePomoci(id: string): Observable<PitanjeZaKojeJeTrazenaPomoc[]> {
+    return this.http.delete<PitanjeZaKojeJeTrazenaPomoc[]>(`${this.baseUrl}/pitanja/vrstaPomoci`, {
+      params: new HttpParams().set('id', id)
+    });
   }
 
   postKorespondencija(uslugaId: string, korespondencija: KorespondencijaModel): Observable<UslugaModel> {
@@ -66,6 +73,38 @@ export class UslugaService {
       uslugaId,
       korespId,
       pravniAktId
+    });
+  }
+
+  getUslugaCount(): Observable<{count: number}> {
+    return this.http.get<{count: number}>(`${this.baseUrl}/search/uslugaCount`);
+  }
+
+  getAllBespPomoc(): Observable<BesplatnaPravnaPomoc[]> {
+    return this.http.get<BesplatnaPravnaPomoc[]>(`${this.baseUrl}/pitanja/besplatnaPomoc`);
+  }
+
+  postBespPomoc(pomoc: {bespPomoc: string}): Observable<BesplatnaPravnaPomoc> {
+    return this.http.post<BesplatnaPravnaPomoc>(`${this.baseUrl}/pitanja/besplatnaPomoc`, pomoc);
+  }
+
+  deleteBespPomoc(id: string): Observable<BesplatnaPravnaPomoc[]> {
+    return this.http.delete<BesplatnaPravnaPomoc[]>(`${this.baseUrl}/pitanja/besplatnaPomoc`, {
+      params: new HttpParams().set('id', id)
+    });
+  }
+
+  getAllSocZastita(): Observable<UslugeSocZastite[]> {
+    return this.http.get<UslugeSocZastite[]>(`${this.baseUrl}/pitanja/socZastita`);
+  }
+
+  postSocZastita(zastita: {socZastita: string}): Observable<UslugeSocZastite> {
+    return this.http.post<UslugeSocZastite>(`${this.baseUrl}/pitanja/socZastita`, zastita);
+  }
+
+  deleteSocZastita(id: string): Observable<UslugeSocZastite[]> {
+    return this.http.delete<UslugeSocZastite[]>(`${this.baseUrl}/pitanja/socZastita`, {
+      params: new HttpParams().set('id', id)
     });
   }
 }

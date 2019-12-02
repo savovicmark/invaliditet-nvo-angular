@@ -12,6 +12,8 @@ export enum AdminActionTypes {
   AllKorisnikLoaded = '[Admin API] All Korisnik Loaded',
   KorisnikByIdLoaded = '[Admin API] One Korisnik Loaded',
   KorisnikUpdated = '[Admin API] Korisnik Updated',
+  DeleteKorisnik = '[Admin Page] Delete Korisnik',
+  KorisnikDeleted = '[Admin API] Korisnik Deleted',
   // ==================================================================================
   PostUsluga = '[Admin Post Usluga Page] Post Usluga',
   GetAllUslugaForKorisnik = '[Admin] Get Usluga For Korisnik',
@@ -26,7 +28,13 @@ export enum AdminActionTypes {
   DeleteDostDok = '[Update Koresp] Delete Dostavljeni Dokument',
   DostDokDeleted = '[Admin API] Dostavljeni Dokument Deleted',
   DeletePripAkt = '[Update Koresp] Delete Pripremljeni Pravni Akt',
-  PripAktDeleted = '[Admin API] Pripremljeni Pravni Akt Deleted'
+  PripAktDeleted = '[Admin API] Pripremljeni Pravni Akt Deleted',
+  PitanjePomocChange = '[Usluga Sort] Pitanje Za Koje Je Trazena Pomoc Change',
+  VrstaPomocChange = '[Usluga Sort] Vrsta Pruzene Pomoci Change',
+  InvaliditetChange = '[Korisnik Sort] Invaliditet Change',
+  SposobnostChange = '[Korisnik Sort] Sposobnost Change',
+  ZaposlenjeChange = '[Korisnik Sort] Zaposlenje Change',
+  ObrazovanjeChange = '[Korisnik Sort] Obrazovanje Change'
 }
 
 export class PostKorisnikAction implements Action {
@@ -46,6 +54,16 @@ export class GetKorisnikByIdAction implements Action {
 export class UpdateKorisnikAction implements Action {
   readonly type = AdminActionTypes.UpdateKorisnik;
   constructor(public payload: {korisnikId: string, korisnik: any}) {}
+}
+
+export class DeleteKorisnikAction implements Action {
+  readonly type = AdminActionTypes.DeleteKorisnik;
+  constructor(public payload: {id: string}) {}
+}
+
+export class KorisnikDeletedAction implements Action {
+  readonly type = AdminActionTypes.KorisnikDeleted;
+  constructor(public payload: {korisnik: Korisnik}) {}
 }
 
 export class KorisnikUpdatedAction implements Action {
@@ -138,6 +156,36 @@ export class PripAktDeletedAction implements Action {
   constructor(public payload: {usluga: Update<UslugaModel>}) {}
 }
 
+export class PitanjePomocChangedAction implements Action {
+  readonly type = AdminActionTypes.PitanjePomocChange;
+  constructor(public payload: string) {}
+}
+
+export class VrstaPomocChangedAction implements Action {
+  readonly type = AdminActionTypes.VrstaPomocChange;
+  constructor(public payload: string) {}
+}
+
+export class InvaliditetChangeAction implements Action {
+   readonly type = AdminActionTypes.InvaliditetChange;
+  constructor(public payload: string) {}
+ }
+
+export class ZaposlenjeChangeAction implements Action {
+  readonly type = AdminActionTypes.ZaposlenjeChange;
+ constructor(public payload: string) {}
+}
+
+export class ObrazovanjeChangeAction implements Action {
+  readonly type = AdminActionTypes.ObrazovanjeChange;
+ constructor(public payload: string) {}
+}
+
+export class SposobnostChangeAction implements Action {
+  readonly type = AdminActionTypes.SposobnostChange;
+ constructor(public payload: string) {}
+}
+
 export type AdminActions = GetAllKorisnikAction
                           | GetKorisnikByIdAction
                           | PostKorisnikAction
@@ -159,4 +207,12 @@ export type AdminActions = GetAllKorisnikAction
                           | DeleteDostDokAction
                           | DeletePripAktAction
                           | DostDokDeletedAction
-                          | PripAktDeletedAction;
+                          | PripAktDeletedAction
+                          | PitanjePomocChangedAction
+                          | VrstaPomocChangedAction
+                          | ZaposlenjeChangeAction
+                          | InvaliditetChangeAction
+                          | ObrazovanjeChangeAction
+                          | SposobnostChangeAction
+                          | DeleteKorisnikAction
+                          | KorisnikDeletedAction;

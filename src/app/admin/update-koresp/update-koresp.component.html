@@ -1,5 +1,5 @@
 <section fxLayout fxLayoutAlign="center center">
-  <form fxFlex fxLayout="column" [formGroup]="uslugaForm" (ngSubmit)="submitUsluga()">
+  <form fxFlex="100%" fxLayout="column" [formGroup]="uslugaForm" (ngSubmit)="submitUsluga()">
       <mat-form-field>
           <mat-label>
             Da li se korisnik obratio licno ili druga osoba u njegovo ime?
@@ -51,8 +51,8 @@
             Pitanje za koje je trazena pomoc
         </mat-label>
         <mat-select multiple="true" formControlName="pitanjeZaKojeJeTrazenaPomoc">
-          <mat-option *ngFor="let pitanje of pitanja" [value]="pitanje" >
-            {{pitanje | uppercase}}
+          <mat-option *ngFor="let pitanje of pitanja" [value]="pitanje.vrstaPomoci" >
+            {{pitanje.vrstaPomoci | uppercase}}
           </mat-option>
         </mat-select>
     </mat-form-field>
@@ -105,6 +105,20 @@
               Opis dokumenta
             </mat-label>
             <input type="text" matInput formControlName="opis">
+          </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <mat-label>
+              Datum dostavljanja dokumenta?
+            </mat-label>
+              <input matInput [matDatepicker]="picker4" [max]="today" formControlName="datum">
+              <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+              <mat-datepicker #picker4 startView="year"></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>
+              Broj pod kojim je dokument zaveden
+            </mat-label>
+            <input type="text" matInput formControlName="broj">
           </mat-form-field>
            <input type="file" multiple="false" (change)="onFileSelect($event, i)">
         </div>
@@ -207,9 +221,23 @@
           <div [formGroupName]="i" fxLayout="column">
             <mat-form-field>
               <mat-label>
-                Opis primpremljenog pravnog akta
+                Opis pripremljenog pravnog akta
               </mat-label>
               <input type="text" matInput formControlName="opis">
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+              <mat-label>
+                Datum dostavljanja dokumenta?
+              </mat-label>
+                <input matInput [matDatepicker]="picker5" [max]="today" formControlName="datum">
+                <mat-datepicker-toggle matSuffix [for]="picker5"></mat-datepicker-toggle>
+                <mat-datepicker #picker5 startView="year"></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>
+                Broj pod kojim je dokument zaveden
+              </mat-label>
+              <input type="text" matInput formControlName="broj">
             </mat-form-field>
              <input type="file" multiple="false" (change)="onPravniAktSelect($event, i)">
           </div>

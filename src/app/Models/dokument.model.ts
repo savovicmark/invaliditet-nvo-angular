@@ -3,4 +3,6 @@ export class Dokument {
   _id?: string;
   opis: string;
   file: string;
+  datum?: Date;
+  broj?: number;
 }

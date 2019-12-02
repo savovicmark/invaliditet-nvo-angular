@@ -4,12 +4,14 @@ import { AdminState } from '../admin.reducers';
 import { Korisnik } from 'src/app/Models/korisnik.model';
 import { Observable, Subscription } from 'rxjs';
 import { selectKorisnikById, selectSelectedKorisnik, selectUslugeForKorisnikById } from '../admin.selectors';
-import { GetKorisnikByIdAction, GetAllUslugaForKorisnikAction } from '../admin.actions';
+import { GetKorisnikByIdAction, GetAllUslugaForKorisnikAction, DeleteKorisnikAction } from '../admin.actions';
 import { selectKorisnikId, selectRouter } from 'src/app/main/main.reducers';
 import { tap, map, mapTo, withLatestFrom, mergeMap, switchMap, filter, distinctUntilChanged } from 'rxjs/operators';
 import { Params, Router } from '@angular/router';
 import { UslugaModel } from 'src/app/Models/usluga.model';
 import { trigger, transition, style, animate } from '@angular/animations';
+import { MatDialog } from '@angular/material';
+import { DialogComponent } from '../dialog/dialog.component';
 
 @Component({
   selector: 'app-one-korisnik',
@@ -38,7 +40,8 @@ export class OneKorisnikComponent implements OnInit, OnDestroy {
   sub$: Subscription;
 
   constructor(private store: Store<AdminState>,
-              private router: Router) { }
+              private router: Router,
+              private dialog: MatDialog) { }
 
   ngOnInit() {
     this.sub$ = this.store.pipe(
@@ -58,6 +61,19 @@ export class OneKorisnikComponent implements OnInit, OnDestroy {
 
   navigateToAddUsluga() {
     this.router.navigate(['/Admin', 'addUsluga', this.id]);
+  }
+
+  deleteKorisnik(id: string) {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      data: {
+        question: 'korisnika'
+      }
+    });
+    dialogRef.afterClosed().subscribe(res => {
+      if (res) {
+        this.store.dispatch(new DeleteKorisnikAction({id}));
+      }
+    });
   }
 
 

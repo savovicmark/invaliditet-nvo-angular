@@ -1,0 +1,17 @@
+section{
+  margin: 70px auto 0px auto;
+  width: 80%;
+  @media screen and (max-width: 600px){
+    width: 100%;
+  }
+}
+mat-list{
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  margin-bottom: 20px;
+}
+mat-form-field{
+  width: 50%;
+  @media screen and (max-width: 600px){
+    width: 100%;
+  }
+}

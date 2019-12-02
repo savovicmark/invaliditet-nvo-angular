@@ -13,6 +13,7 @@ import { UpdateKorespondencijaAction, GetUslugaByIdAction, DeleteDostDokAction, 
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { DialogComponent } from '../dialog/dialog.component';
+import { PitanjeZaKojeJeTrazenaPomoc } from 'src/app/Models/pitanja.model';
 
 @Component({
   selector: 'app-update-koresp',
@@ -42,7 +43,7 @@ export class UpdateKorespComponent implements OnInit, OnDestroy {
     'fiksni telefon', 'mobilni telefon', 'mobilni telefon zaposlenog/e',
     'mail', 'facebook', 'instagram', 'twitter', 'licno'
   ];
-  pitanja: string[];
+  pitanja: PitanjeZaKojeJeTrazenaPomoc[];
   bespPomoc = ['pravno obavjestenje', 'pravni savjet', 'zastupanje', 'posredovanje/medijacija'];
   socZast = ['personalna asistencija', 'pomoc u kuci', 'savjetodavno-terapijske'];
 
@@ -115,7 +116,7 @@ export class UpdateKorespComponent implements OnInit, OnDestroy {
   dodajPitanje(): void {
     const pitanje = this.uslugaForm.get('novoPitanje').value;
     this.uslugaService.postVrstaPomoci({vrstaPomoci: pitanje}).subscribe(novoPit => {
-      this.pitanja = [...this.pitanja, novoPit.vrstaPomoci];
+      this.pitanja = [...this.pitanja, novoPit];
       this.uslugaForm.get('novoPitanje').reset();
     });
   }
@@ -143,13 +144,17 @@ export class UpdateKorespComponent implements OnInit, OnDestroy {
 
   addPravnaAkta(): FormGroup {
     return this.fb.group({
-      opis: ['']
+      opis: [''],
+      datum: [null],
+      broj: ['']
     });
   }
 
   addDokument(): FormGroup {
     return this.fb.group({
-      opis: ['']
+      opis: [''],
+      datum: [null],
+      broj: ['']
     });
   }
 
@@ -167,14 +172,16 @@ export class UpdateKorespComponent implements OnInit, OnDestroy {
   submitUsluga() {
     // const dostDok: Dokument[] | [] = [];
     this.dokuments.value.forEach((el, index) => {
-      this.dostDok[index + this.dostAktiLength] = {...this.dostDok[index + this.dostAktiLength], opis: el.opis};
+      // tslint:disable-next-line: max-line-length
+      this.dostDok[index + this.dostAktiLength] = {...this.dostDok[index + this.dostAktiLength], opis: el.opis, datum: el.datum, broj: el.broj};
     });
     /*this.dostAkti.forEach((el, index) => {
       this.dostDok[index] = {...this.dostDok[index], file: el};
     });*/
     // const pripAkta: Dokument[] | [] = [];
     this.pravnaAkta.value.forEach((el, index) => {
-      this.pripAkta[index + this.pripPravniAktiLength] = {...this.pripAkta[index + this.pripPravniAktiLength], opis: el.opis};
+      // tslint:disable-next-line: max-line-length
+      this.pripAkta[index + this.pripPravniAktiLength] = {...this.pripAkta[index + this.pripPravniAktiLength], opis: el.opis, datum: el.datum, broj: el.broj};
     });
     /*this.pripPravniAkti.forEach((el, index) => {
       this.pripAkta[index] = {...this.pripAkta[index], file: el};

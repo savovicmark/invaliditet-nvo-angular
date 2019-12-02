@@ -1,7 +1,7 @@
 <section fxLayout="column">
-  <mat-accordion *ngFor="let korisnik of (korisnici$ | async)">
+  <mat-accordion *ngFor="let korisnik of passedData.korisnici">
     <mat-expansion-panel>
-      <mat-expansion-panel-header collapsedHeight="70px" expandedHeight="70px" fxLayout>
+      <mat-expansion-panel-header collapsedHeight="70px" expandedHeight="70px">
         <!--<mat-panel-title>
           Ime, prezime, datum rodjenja
         </mat-panel-title>
@@ -49,12 +49,15 @@
             </div>
       </div>
       <mat-action-row>
-          <a [routerLink]="['/Admin', 'korisnik', korisnik._id]"><span>Pregledaj korisnika</span> <mat-icon>double_arrow</mat-icon> </a>
+          <a [routerLink]="['/Admin', 'korisnik', korisnik._id]" [mat-dialog-close]><span>Pregledaj korisnika</span> <mat-icon>double_arrow</mat-icon> </a>
       </mat-action-row>
     </mat-expansion-panel>
   </mat-accordion>
   <ng-template #na>
       <p class="podaci">N/A</p>
   </ng-template>
+  <div *ngIf="!passedData.korisnici.length" class="podaci" fxLayout fxLayoutGap="10px" fxLayoutAlign="center center">
+    <mat-icon>error</mat-icon>
+    <span>Nema korisnika za zadati kriterijum!!!</span>
+  </div>
 </section>
-
