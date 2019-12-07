@@ -1,0 +1,17 @@
+<section fxLayout fxLayoutAlign="center start">
+  <mat-tab-group>
+    <mat-tab label="Login" *ngIf="!authService.isLogedInUser()">
+      <app-login></app-login>
+    </mat-tab>
+    <mat-tab label="Signup" *ngIf="!authService.isLogedInUser()">
+      <app-sign-up></app-sign-up>
+    </mat-tab>
+    <mat-tab label="Podesavanja" *ngIf="authService.isLoggedInAdmin()">
+      <app-admin-opcije></app-admin-opcije>
+    </mat-tab>
+    <mat-tab label="Promjena sifre" *ngIf="authService.isLogedInUser()">
+      <app-upd-pass></app-upd-pass>
+    </mat-tab>
+  </mat-tab-group>
+</section>
+

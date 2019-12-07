@@ -66,6 +66,7 @@ export class OneKorisnikComponent implements OnInit, OnDestroy {
   deleteKorisnik(id: string) {
     const dialogRef = this.dialog.open(DialogComponent, {
       data: {
+        action: 'izbrisete',
         question: 'korisnika'
       }
     });

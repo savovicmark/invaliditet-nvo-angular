@@ -1,0 +1,20 @@
+<form [formGroup]="lozinkaForm" (ngSubmit)="changePass()">
+  <div formGroupName="lozinka" fxLayout="column" class="margintop">
+      <mat-form-field color="primary" >
+          <mat-label>
+            Nova lozinka
+          </mat-label>
+          <input type="password" matInput formControlName="sifra">
+      </mat-form-field>
+      <mat-form-field color="primary">
+          <mat-label>
+            Potvrdi novu lozinku
+          </mat-label>
+          <input type="password" matInput formControlName="potvrda" [errorStateMatcher]="errorMatcher">
+          <mat-error *ngIf="lozinkaForm.get('lozinka').hasError('passMatch')">
+            Lozinke moraju biti identicne
+          </mat-error>
+      </mat-form-field>
+  </div>
+  <button type="submit" class="margintop" mat-raised-button color="primary" [disabled]="lozinkaForm.invalid">Posalji</button>
+</form>

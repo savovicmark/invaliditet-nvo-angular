@@ -3,6 +3,7 @@ import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import * as korisnikActions from './admin.actions';
 import { UslugaModel } from '../Models/usluga.model';
 import { AppState } from '../main/main.reducers';
+import { UserModel } from '../Models/user.model';
 
 export interface AdminState extends AppState {
   korisnici: KorisnikState;
@@ -15,6 +16,7 @@ export interface AdminState extends AppState {
     zaposlenje: string,
     obrazovanje: string
   };
+  user: UserModel;
 }
 // ts-lint:disable
 export interface KorisnikState extends EntityState<Korisnik> {
@@ -24,6 +26,7 @@ export interface KorisnikState extends EntityState<Korisnik> {
 export interface UslugaState extends EntityState<UslugaModel> {
 
 }
+
 
 export const adapter: EntityAdapter<Korisnik> =  createEntityAdapter<Korisnik>({
   selectId: korisnik => korisnik._id,
@@ -150,6 +153,28 @@ export function korisnikSortReducer(state = initialKorisnikSortState, action: ko
     default: {
         return state;
       }
+  }
+}
+
+export const initialUserState: UserModel = {
+  name: '',
+  lastName: '',
+  username: '',
+  _id: '',
+  verified: false,
+  role: '',
+  password: ''
+};
+
+export function userReducer(state = initialUserState, action: korisnikActions.AdminActions) {
+  switch (action.type) {
+    case korisnikActions.AdminActionTypes.LoggedIn:
+      return Object.assign({}, state, action.payload);
+    case korisnikActions.AdminActionTypes.LogOut:
+      return Object.assign({}, initialUserState);
+    default: {
+      return state;
+    }
   }
 }
 

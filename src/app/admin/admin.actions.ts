@@ -2,6 +2,7 @@ import { Action } from '@ngrx/store';
 import { Korisnik } from '../Models/korisnik.model';
 import { UslugaModel, KorespondencijaModel } from '../Models/usluga.model';
 import { Update } from '@ngrx/entity';
+import { UserModel } from '../Models/user.model';
 
 export enum AdminActionTypes {
   PostKorisnik = '[Admin Form Page] Post Korisnik',
@@ -34,7 +35,11 @@ export enum AdminActionTypes {
   InvaliditetChange = '[Korisnik Sort] Invaliditet Change',
   SposobnostChange = '[Korisnik Sort] Sposobnost Change',
   ZaposlenjeChange = '[Korisnik Sort] Zaposlenje Change',
-  ObrazovanjeChange = '[Korisnik Sort] Obrazovanje Change'
+  ObrazovanjeChange = '[Korisnik Sort] Obrazovanje Change',
+  // ==================================================================================
+  LogIn = '[Admin Tabs] Log In',
+  LoggedIn = '[Admin API] Logged In',
+  LogOut = '[Admin] Log Out'
 }
 
 export class PostKorisnikAction implements Action {
@@ -186,6 +191,22 @@ export class SposobnostChangeAction implements Action {
  constructor(public payload: string) {}
 }
 
+// =============================================================================================
+
+export class LogInAction implements Action {
+  readonly type = AdminActionTypes.LogIn;
+  constructor(public payload: {username: string, password: string}) {}
+}
+
+export class LoggedInAction implements Action {
+  readonly type = AdminActionTypes.LoggedIn;
+  constructor(public payload: UserModel) {}
+}
+
+export class LogOutAction implements Action {
+  readonly type = AdminActionTypes.LogOut;
+}
+
 export type AdminActions = GetAllKorisnikAction
                           | GetKorisnikByIdAction
                           | PostKorisnikAction
@@ -215,4 +236,7 @@ export type AdminActions = GetAllKorisnikAction
                           | ObrazovanjeChangeAction
                           | SposobnostChangeAction
                           | DeleteKorisnikAction
-                          | KorisnikDeletedAction;
+                          | KorisnikDeletedAction
+                          | LogInAction
+                          | LoggedInAction
+                          | LogOutAction;

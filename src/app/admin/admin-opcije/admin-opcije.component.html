@@ -1,0 +1,23 @@
+<section>
+  <h3 fxLayout fxLayouAlign="start center">
+    <mat-icon>people_alt</mat-icon>
+    Odobreni korisnici:
+  </h3>
+  <mat-list>
+    <mat-list-item *ngFor="let user of verifiedUsers">
+          <p fxFlex="100%">{{user.name}}&nbsp;{{user.lastName}}&nbsp;-&nbsp;{{user.username}}</p>
+          <button *ngIf="user.role !== 'admin'" aria-label="delete" mat-icon-button (click)="deleteUser(user._id)"><mat-icon>delete_forever</mat-icon></button>
+    </mat-list-item>
+  </mat-list>
+  <h3 fxLayout fxLayouAlign="start center">
+      <mat-icon>people_alt</mat-icon>
+      Zahtjevi za odobravanje:
+  </h3>
+  <mat-list>
+      <mat-list-item *ngFor="let user of requestedUsers">
+        <p fxFlex="100%">{{user.name}}&nbsp;{{user.lastName}}&nbsp;-&nbsp;{{user.username}}</p>
+        <button mat-icon-button aria-label="verify" (click)="verifyUser(user._id)"><mat-icon>done</mat-icon></button>
+        <button mat-icon-button aria-label="delete" (click)="deleteUser(user._id)"><mat-icon>delete_forever</mat-icon></button>
+      </mat-list-item>
+  </mat-list>
+</section>

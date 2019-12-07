@@ -23,7 +23,10 @@ import { AdminActionTypes,
         DeletePripAktAction,
         PripAktDeletedAction,
         DeleteKorisnikAction,
-        KorisnikDeletedAction} from './admin.actions';
+        KorisnikDeletedAction,
+        LogInAction,
+        LoggedInAction,
+        LogOutAction} from './admin.actions';
 import { map, mergeMap, switchMap, withLatestFrom, filter, exhaustMap, tap } from 'rxjs/operators';
 import { KorisnikService } from '../services/korisnik.service';
 import { Korisnik } from '../Models/korisnik.model';
@@ -34,6 +37,9 @@ import { Update } from '@ngrx/entity';
 import { UslugaModel } from '../Models/usluga.model';
 import { ChangeDetectionStrategy } from '@angular/compiler/src/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
+import { defer, of } from 'rxjs';
+import { UserModel } from '../Models/user.model';
 
 @Injectable()
 export class AdminEffects {
@@ -41,6 +47,7 @@ export class AdminEffects {
   constructor(private actions$: Actions,
               private korisnikService: KorisnikService,
               private uslugaService: UslugaService,
+              private authService: AuthService,
               private router: Router,
               private store: Store<any>
               ) {}
@@ -189,5 +196,47 @@ export class AdminEffects {
       ))
     );
 
+    @Effect()
+    login$ = this.actions$.pipe(
+      ofType<LogInAction>(AdminActionTypes.LogIn),
+      exhaustMap(action => this.authService.logIn(action.payload).pipe(
+        tap(user => localStorage.setItem('miboke-token', user.token)),
+        map(user => new LoggedInAction(user.user))
+      ))
+    );
+
+    @Effect({dispatch: false})
+    logout$ = this.actions$.pipe(
+      ofType<LogOutAction>(AdminActionTypes.LogOut),
+      tap(action => {
+        if (localStorage.getItem('miboke-token')) {
+          localStorage.removeItem('miboke-token');
+        }
+        this.router.navigate(['/Admin']);
+      })
+    );
+
+    @Effect()
+    initLogin$ = defer(() => {
+      const token = localStorage.getItem('miboke-token');
+      if (token) {
+        const user = JSON.parse(window.atob(token.split('.')[1]));
+        if (new Date(user.exp * 1000) > new Date()) {
+          return of(new LoggedInAction({
+            name: user.name,
+            lastName: user.lastName,
+            role: user.role,
+            _id: user._id,
+            username: user.username,
+            verified: user.verified,
+            password: user.password
+          }));
+          } else {
+            return of (new LogOutAction());
+        }
+      } else {
+        return of (new LogOutAction());
+      }
+    });
 
 }

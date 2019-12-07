@@ -1,8 +1,11 @@
 <section>
-  <h3>Opcije za Pitanje za koje je trazena pomoc:</h3>
+  <h3 fxLayout fxLayouAlign="start center">
+    <mat-icon>settings_applications</mat-icon>
+    Opcije za Pitanje za koje je trazena pomoc:
+  </h3>
   <mat-list>
     <mat-list-item *ngFor="let pitanje of vrstaPitanja">
-      <p>{{pitanje.vrstaPomoci}}</p>
+      <p fxFlex="100%">{{pitanje.vrstaPomoci}}</p>
       <button mat-icon-button (click)="deleteVrstaPitanja(pitanje._id)">
         <mat-icon>delete_forever</mat-icon>
       </button>
@@ -21,13 +24,16 @@
     </button>
   </div>
   <mat-divider></mat-divider>
-  <h3>Opcije za Besplatna pravna pomoc:</h3>
+  <h3 fxLayout fxLayouAlign="start center">
+    <mat-icon>settings_applications</mat-icon>
+    Opcije za Besplatna pravna pomoc:
+  </h3>
   <mat-list>
     <mat-list-item *ngFor="let pomoc of besplatnaPomoc">
-      <p>{{pomoc.bespPomoc}}</p>
-      <button mat-icon-button (click)="deleteBespPomoc(pomoc._id)">
-        <mat-icon>delete_forever</mat-icon>
-      </button>
+        <p fxFlex="100%">{{pomoc.bespPomoc}}</p>
+        <button mat-icon-button (click)="deleteBespPomoc(pomoc._id)" fxFlex="10%">
+          <mat-icon>delete_forever</mat-icon>
+        </button>
       <mat-divider></mat-divider>
     </mat-list-item>
   </mat-list>
@@ -43,10 +49,13 @@
       </button>
     </div>
     <mat-divider></mat-divider>
-  <h3>Opcije za Usluge socijalne zastite:</h3>
+  <h3 fxLayout fxLayouAlign="start center">
+    <mat-icon>settings_applications</mat-icon>
+    Opcije za Usluge socijalne zastite:
+  </h3>
   <mat-list>
     <mat-list-item *ngFor="let socZast of socijalnaZastita">
-      <p>{{socZast.socZastita}}</p>
+      <p fxFlex="100%">{{socZast.socZastita}}</p>
       <button mat-icon-button (click)="deleteSocZastita(socZast._id)">
         <mat-icon>delete_forever</mat-icon>
       </button>

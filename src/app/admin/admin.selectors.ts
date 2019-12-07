@@ -117,3 +117,8 @@ export const selectObrazovanje = createSelector(
   selectAdminState,
   adminState => adminState.korisnikSort.obrazovanje
 );
+
+export const selectUserId = createSelector(
+  selectAdminState,
+  adminState => adminState.user._id
+);

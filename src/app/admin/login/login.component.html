@@ -1,0 +1,16 @@
+<form [formGroup]="logInForm" fxLayout="column" (ngSubmit)="logIn()">
+  <mat-form-field color="primary" class="margintop">
+    <mat-label>
+      Korisnicko ime
+    </mat-label>
+    <input type="text" matInput formControlName="username">
+  </mat-form-field>
+  <mat-form-field color="primary">
+    <mat-label>
+      Lozinka
+    </mat-label>
+    <input type="password" matInput formControlName="password">
+  </mat-form-field>
+  <button type="submit" mat-raised-button color="primary" class="margintop">Log in</button>
+</form>
+

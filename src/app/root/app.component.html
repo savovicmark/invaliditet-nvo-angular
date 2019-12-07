@@ -60,6 +60,11 @@
         <a>&nbsp;Podesavanja</a>
       </mat-list-item>
       <mat-divider></mat-divider>
+      <mat-list-item fxLayout fxLayoutAlign="start center" fxLayoutGap="20px"
+       (click)="logOut()" *ngIf="authService.isLogedInUser()">
+        <mat-icon>exit_to_app</mat-icon>
+        <a [routerLink]="">Log Out</a>
+      </mat-list-item>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>

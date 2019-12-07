@@ -8,6 +8,10 @@ import { KorisnikSearchComponent } from '../korisnik-search/korisnik-search.comp
 import { debounceTime, distinctUntilChanged, switchMap, filter, exhaustMap } from 'rxjs/operators';
 import { SearchService } from '../services/search.service';
 import { Korisnik } from '../Models/korisnik.model';
+import { AuthService } from '../services/auth.service';
+import { AdminState } from '../admin/admin.reducers';
+import { Store } from '@ngrx/store';
+import { LogOutAction } from '../admin/admin.actions';
 
 @Component({
   selector: 'app-root',
@@ -27,7 +31,9 @@ export class AppComponent implements OnInit {
   constructor(public breakpiontObserver: BreakpointObserver,
               private router: Router,
               public dialog: MatDialog,
-              private searchService: SearchService) {
+              private searchService: SearchService,
+              public authService: AuthService,
+              private store: Store<AdminState>) {
 
   }
 
@@ -62,6 +68,10 @@ export class AppComponent implements OnInit {
    console.log(this.korisnici);
    dialogRef.afterClosed().subscribe(() => this.korisnici = []);
    this.searchForm.reset();
+  }
+
+  logOut() {
+    this.store.dispatch(new LogOutAction());
   }
 
 }

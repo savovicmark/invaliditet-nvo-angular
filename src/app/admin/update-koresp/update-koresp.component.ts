@@ -218,6 +218,7 @@ export class UpdateKorespComponent implements OnInit, OnDestroy {
   deleteDostDok(dostDokId: string) {
     const dialogRef = this.dialog.open(DialogComponent, {
       data: {
+        action: 'izbrisete',
         question: 'dostavljeni dokument'
       }
     });

@@ -1,0 +1,47 @@
+
+  <form [formGroup]="signUpForm" fxLayout="column" (ngSubmit)="signUp()">
+    <mat-form-field color="primary" class="margintop">
+      <mat-label>
+        Ime
+      </mat-label>
+      <input type="text" matInput formControlName="name">
+      <mat-hint>Obavezno polje</mat-hint>
+    </mat-form-field>
+    <mat-form-field color="primary">
+      <mat-label>
+        Prezime
+      </mat-label>
+      <input type="text" matInput formControlName="lastName">
+      <mat-hint>Obavezno polje</mat-hint>
+    </mat-form-field>
+    <mat-form-field color="primary">
+      <mat-label>
+        Korisnicko ime
+      </mat-label>
+      <input type="text" matInput formControlName="username">
+      <mat-hint>Obavezno polje</mat-hint>
+    </mat-form-field>
+    <div formGroupName="sifra" fxLayout="column">
+      <mat-form-field color="primary">
+        <mat-label>
+          Lozinka
+        </mat-label>
+        <input type="password" matInput formControlName="password">
+        <mat-hint>Obavezno polje</mat-hint>
+      </mat-form-field>
+      <mat-form-field color="primary">
+        <mat-label>
+          Potvrdi lozinku
+        </mat-label>
+        <input type="password" matInput formControlName="potvrda" [errorStateMatcher]="errorMatcher">
+        <mat-hint>Obavezno polje</mat-hint>
+        <mat-error *ngIf="signUpForm.get('sifra').hasError('passMatch')">
+          Lozinke moraju biti identicne
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <button type="submit" mat-raised-button color="primary" class="margintop" [disabled]="signUpForm.invalid">
+      Sign up
+    </button>
+  </form>
+

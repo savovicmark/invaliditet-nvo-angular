@@ -1,5 +1,5 @@
 <div fxLayout="column" fxLayoutAlign="center center">
-  <h2 mat-dialog-title>Jeste li sigurni da zelite da izbrisete</h2>
+  <h2 mat-dialog-title>Jeste li sigurni da zelite da <span *ngIf="!dialogData.action">izbrisete</span>{{dialogData.action}}</h2>
   <h2 mat-dialog-title>{{dialogData.question}}?</h2>
 </div>
 <mat-dialog-actions fxLayout fxLayoutAlign="center">
