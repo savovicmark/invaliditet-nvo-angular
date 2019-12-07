@@ -12,7 +12,7 @@ import { MaterialModule } from './material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { LayoutModule } from '@angular/cdk/layout';
 import { NavItemComponent } from './nav-item/nav-item.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AdminModule } from './admin.module';
 import { EffectsModule } from '@ngrx/effects';
 import { environment } from 'src/environments/environment';
@@ -20,6 +20,8 @@ import { CustomSerializer } from './services/router-store';
 import { Routes, RouterModule } from '@angular/router';
 import { AllKorisnikComponent } from './admin/all-korisnik/all-korisnik.component';
 import { KorisnikSearchComponent } from './korisnik-search/korisnik-search.component';
+import { ToastrModule } from 'ngx-toastr';
+import { HttpInterceptorService } from './services/http-interceptor.service';
 
 
 @NgModule({
@@ -32,6 +34,11 @@ import { KorisnikSearchComponent } from './korisnik-search/korisnik-search.compo
     BrowserModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      timeOut: 1500,
+      positionClass: 'toast-top-center',
+      preventDuplicates: true
+    }),
     // AppRoutingModule,
     RouterModule.forRoot([], {scrollPositionRestoration: 'enabled'}),
     BrowserAnimationsModule,
@@ -60,7 +67,9 @@ import { KorisnikSearchComponent } from './korisnik-search/korisnik-search.compo
     }),
     StoreRouterConnectingModule.forRoot({stateKey: 'router', serializer: CustomSerializer})
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true
+  }],
   entryComponents: [KorisnikSearchComponent],
   bootstrap: [AppComponent]
 })

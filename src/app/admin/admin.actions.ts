@@ -39,7 +39,8 @@ export enum AdminActionTypes {
   // ==================================================================================
   LogIn = '[Admin Tabs] Log In',
   LoggedIn = '[Admin API] Logged In',
-  LogOut = '[Admin] Log Out'
+  LogOut = '[Admin] Log Out',
+  LogInError = '[Admin Api] Log In Error'
 }
 
 export class PostKorisnikAction implements Action {
@@ -207,6 +208,10 @@ export class LogOutAction implements Action {
   readonly type = AdminActionTypes.LogOut;
 }
 
+export class LogInErrorAction implements Action {
+  readonly type = AdminActionTypes.LogInError;
+}
+
 export type AdminActions = GetAllKorisnikAction
                           | GetKorisnikByIdAction
                           | PostKorisnikAction
@@ -239,4 +244,5 @@ export type AdminActions = GetAllKorisnikAction
                           | KorisnikDeletedAction
                           | LogInAction
                           | LoggedInAction
-                          | LogOutAction;
+                          | LogOutAction
+                          | LogInErrorAction;

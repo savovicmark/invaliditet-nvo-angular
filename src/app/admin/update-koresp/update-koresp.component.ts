@@ -13,7 +13,7 @@ import { UpdateKorespondencijaAction, GetUslugaByIdAction, DeleteDostDokAction, 
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { DialogComponent } from '../dialog/dialog.component';
-import { PitanjeZaKojeJeTrazenaPomoc } from 'src/app/Models/pitanja.model';
+import { PitanjeZaKojeJeTrazenaPomoc, BesplatnaPravnaPomoc, UslugeSocZastite } from 'src/app/Models/pitanja.model';
 
 @Component({
   selector: 'app-update-koresp',
@@ -44,8 +44,8 @@ export class UpdateKorespComponent implements OnInit, OnDestroy {
     'mail', 'facebook', 'instagram', 'twitter', 'licno'
   ];
   pitanja: PitanjeZaKojeJeTrazenaPomoc[];
-  bespPomoc = ['pravno obavjestenje', 'pravni savjet', 'zastupanje', 'posredovanje/medijacija'];
-  socZast = ['personalna asistencija', 'pomoc u kuci', 'savjetodavno-terapijske'];
+  bespPomoc: BesplatnaPravnaPomoc[]; // = ['pravno obavjestenje', 'pravni savjet', 'zastupanje', 'posredovanje/medijacija'];
+  socZast: UslugeSocZastite[]; // = ['personalna asistencija', 'pomoc u kuci', 'savjetodavno-terapijske'];
 
   constructor(private fb: FormBuilder,
               private store: Store<AdminState>,
@@ -62,6 +62,8 @@ export class UpdateKorespComponent implements OnInit, OnDestroy {
     this.uslugaService.getVrstePomoci().subscribe(vrste => {
       this.pitanja = vrste;
     });
+    this.uslugaService.getAllBespPomoc().subscribe(besp => this.bespPomoc = besp);
+    this.uslugaService.getAllSocZastita().subscribe(soc => this.socZast = soc);
     this.route.params.subscribe(params => {
       this.uslugaId = params.uslugaId;
       this.korespId = params.korespId;

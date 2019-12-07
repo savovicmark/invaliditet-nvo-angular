@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, AbstractControl, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { ErrorStateCrossField } from 'src/app/services/errorStateMatcher';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-sign-up',
@@ -14,7 +15,8 @@ export class SignUpComponent implements OnInit {
   errorMatcher = new ErrorStateCrossField();
 
   constructor(private fb: FormBuilder,
-              private authService: AuthService) { }
+              private authService: AuthService,
+              private toastr: ToastrService) { }
 
   ngOnInit() {
     this.signUpForm = this.fb.group({
@@ -36,9 +38,12 @@ export class SignUpComponent implements OnInit {
       password: this.signUpForm.get('sifra.password').value
     }).subscribe(user => {
       this.signUpForm.reset();
-      if (user) {
-        console.log(user);
-      }
+      this.toastr.success('Nalog kreiran USPJESNO', 'Sacekajte da administrator aktivira vas nalog', {
+        timeOut: 3000
+      });
+    },
+    err => {
+      this.toastr.error('Greska na serveru', 'Nalog nije kreiran');
     });
   }
 

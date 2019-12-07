@@ -160,13 +160,13 @@
       </mat-label>
       <mat-select multiple="true" formControlName="oblikPruzenePomoci">
         <mat-optgroup label="Besplatna pravna pomoc">
-            <mat-option *ngFor="let besp of bespPomoc" [value]="'Besplatna pravna pomoc - ' + besp" >
-                {{ besp | uppercase}}
+            <mat-option *ngFor="let besp of bespPomoc" [value]="'Besplatna pravna pomoc - ' + besp.bespPomoc" >
+                {{ besp.bespPomoc | uppercase}}
             </mat-option>
         </mat-optgroup>
         <mat-optgroup label="Usluge socijalne i djecje zastite">
-            <mat-option *ngFor="let soc of socZast " [value]="'Usluge socijalne i djecje zastite - ' + soc">
-                {{ soc | uppercase }}
+            <mat-option *ngFor="let soc of socZast " [value]="'Usluge socijalne i djecje zastite - ' + soc.socZastita">
+                {{ soc.socZastita | uppercase }}
             </mat-option>
         </mat-optgroup>
       </mat-select>

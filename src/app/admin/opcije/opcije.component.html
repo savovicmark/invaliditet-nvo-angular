@@ -5,7 +5,7 @@
   </h3>
   <mat-list>
     <mat-list-item *ngFor="let pitanje of vrstaPitanja">
-      <p fxFlex="100%">{{pitanje.vrstaPomoci}}</p>
+      <p fxFlex="100%" class="podaci">{{pitanje.vrstaPomoci | uppercase}}</p>
       <button mat-icon-button (click)="deleteVrstaPitanja(pitanje._id)">
         <mat-icon>delete_forever</mat-icon>
       </button>
@@ -30,7 +30,7 @@
   </h3>
   <mat-list>
     <mat-list-item *ngFor="let pomoc of besplatnaPomoc">
-        <p fxFlex="100%">{{pomoc.bespPomoc}}</p>
+        <p fxFlex="100%" class="podaci">{{pomoc.bespPomoc | uppercase}}</p>
         <button mat-icon-button (click)="deleteBespPomoc(pomoc._id)" fxFlex="10%">
           <mat-icon>delete_forever</mat-icon>
         </button>
@@ -55,7 +55,7 @@
   </h3>
   <mat-list>
     <mat-list-item *ngFor="let socZast of socijalnaZastita">
-      <p fxFlex="100%">{{socZast.socZastita}}</p>
+      <p fxFlex="100%" class="podaci">{{socZast.socZastita | uppercase}}</p>
       <button mat-icon-button (click)="deleteSocZastita(socZast._id)">
         <mat-icon>delete_forever</mat-icon>
       </button>

@@ -2,9 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, AbstractControl, Validators } from '@angular/forms';
 import { ErrorStateCrossField } from '../../services/errorStateMatcher';
 import { AuthService } from 'src/app/services/auth.service';
-import { State } from '@ngrx/store';
-import { AdminState } from '../admin.reducers';
-import { MatSnackBar } from '@angular/material';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-upd-pass',
@@ -19,8 +18,8 @@ export class UpdPassComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               private authService: AuthService,
-              private state: State<AdminState>,
-              private snackBar: MatSnackBar) { }
+              private router: Router,
+              private toastr: ToastrService) { }
 
   ngOnInit() {
     this.lozinkaForm = this.fb.group({
@@ -51,16 +50,14 @@ export class UpdPassComponent implements OnInit {
     this.authService.changePass(this.lozinkaForm.get('lozinka.sifra').value, this.id).subscribe(res => {
       this.lozinkaForm.reset();
       if (res.status === 200 || res.status === 304) {
-        this.snackBar.open('Lozinka promijenjena', 'USPJESNO', {
-          duration: 1000
-        });
+        this.toastr.success('Lozinka promijenjena', 'USPJESNO');
       }
+      this.router.navigate(['/Admin']);
     },
     err => {
       this.lozinkaForm.reset();
-      this.snackBar.open('Lozinka nije promijenjena', 'GRESKA', {
-        duration: 500
-      });
+      this.toastr.error('Lozinka nije promijenjena', 'GRESKA');
+      this.router.navigate(['/Admin']);
     });
   }
 

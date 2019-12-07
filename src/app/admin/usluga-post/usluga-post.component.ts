@@ -9,7 +9,7 @@ import { PostKorespondencijaAction, PostUslugaAction } from '../admin.actions';
 import { selectKorisnikId } from 'src/app/main/main.reducers';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
-import { PitanjeZaKojeJeTrazenaPomoc } from 'src/app/Models/pitanja.model';
+import { PitanjeZaKojeJeTrazenaPomoc, BesplatnaPravnaPomoc, UslugeSocZastite } from 'src/app/Models/pitanja.model';
 
 @Component({
   selector: 'app-usluga-post',
@@ -37,8 +37,8 @@ export class UslugaPostComponent implements OnInit, OnDestroy {
     'mail', 'facebook', 'instagram', 'twitter', 'licno'
   ];
   pitanja: PitanjeZaKojeJeTrazenaPomoc[];
-  bespPomoc = ['pravno obavjestenje', 'pravni savjet', 'zastupanje', 'posredovanje/medijacija'];
-  socZast = ['personalna asistencija', 'pomoc u kuci', 'savjetodavno-terapijske'];
+  bespPomoc: BesplatnaPravnaPomoc[]; // = ['pravno obavjestenje', 'pravni savjet', 'zastupanje', 'posredovanje/medijacija'];
+  socZast: UslugeSocZastite[]; // = ['personalna asistencija', 'pomoc u kuci', 'savjetodavno-terapijske'];
 
   uslugaForm: FormGroup;
 
@@ -52,6 +52,8 @@ export class UslugaPostComponent implements OnInit, OnDestroy {
     this.uslugaService.getVrstePomoci().subscribe(vrste => {
       this.pitanja = vrste;
     });
+    this.uslugaService.getAllBespPomoc().subscribe(besp => this.bespPomoc = besp);
+    this.uslugaService.getAllSocZastita().subscribe(soc => this.socZast = soc);
     this.uslugaForm = this.fb.group({
       koJePodnioZahtjev: [''],
       imeKoJePodnioZahtjev: [''],

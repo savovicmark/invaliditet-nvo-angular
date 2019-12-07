@@ -4,7 +4,7 @@
       <mat-icon>menu</mat-icon>
     </button>
   </div>
-  <div fxFlex fxLayout fxLayoutAlign="end center" fxLayoutGap="10px">
+  <div fxFlex fxLayout fxLayoutAlign="end center" fxLayoutGap="10px" *ngIf="authService.isLogedInUser()">
     <div fxHide.xs fxLayout fxLayoutAlign="start center"><mat-icon>youtube_searched_for</mat-icon>&nbsp;Pretrazi korisnike : </div>
     <form [formGroup]="searchForm" fxLayout fxLayoutGap="5px">
       <mat-form-field>

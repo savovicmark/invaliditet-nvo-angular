@@ -26,8 +26,9 @@ import { AdminActionTypes,
         KorisnikDeletedAction,
         LogInAction,
         LoggedInAction,
-        LogOutAction} from './admin.actions';
-import { map, mergeMap, switchMap, withLatestFrom, filter, exhaustMap, tap } from 'rxjs/operators';
+        LogOutAction,
+        LogInErrorAction} from './admin.actions';
+import { map, mergeMap, switchMap, withLatestFrom, filter, exhaustMap, tap, catchError } from 'rxjs/operators';
 import { KorisnikService } from '../services/korisnik.service';
 import { Korisnik } from '../Models/korisnik.model';
 import { Store, select } from '@ngrx/store';
@@ -40,6 +41,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { defer, of } from 'rxjs';
 import { UserModel } from '../Models/user.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable()
 export class AdminEffects {
@@ -49,7 +51,8 @@ export class AdminEffects {
               private uslugaService: UslugaService,
               private authService: AuthService,
               private router: Router,
-              private store: Store<any>
+              private store: Store<any>,
+              private toastr: ToastrService
               ) {}
 
   @Effect()
@@ -201,7 +204,8 @@ export class AdminEffects {
       ofType<LogInAction>(AdminActionTypes.LogIn),
       exhaustMap(action => this.authService.logIn(action.payload).pipe(
         tap(user => localStorage.setItem('miboke-token', user.token)),
-        map(user => new LoggedInAction(user.user))
+        map(user => new LoggedInAction(user.user)),
+        catchError(err => of(new LogInErrorAction()))
       ))
     );
 
@@ -238,5 +242,17 @@ export class AdminEffects {
         return of (new LogOutAction());
       }
     });
+
+    @Effect({dispatch: false})
+    loggedIn$ = this.actions$.pipe(
+      ofType<LoggedInAction>(AdminActionTypes.LoggedIn),
+      tap(action => this.toastr.success('LOGGED IN', 'USPJESNO'))
+    );
+
+    @Effect({dispatch: false})
+    logInError$ = this.actions$.pipe(
+      ofType<LogInErrorAction>(AdminActionTypes.LogInError),
+      tap(action => this.toastr.error('Neuspjesno', 'Vas nalog nije odobren ili greska u autorizaciji'))
+    );
 
 }
