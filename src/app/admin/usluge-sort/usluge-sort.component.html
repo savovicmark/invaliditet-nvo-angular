@@ -90,9 +90,9 @@
           </p>
           <p class="podaci" fxFlex="40%" *ngIf="korespAsArray(usluga)[0].sazetakPitanja; else na">{{korespAsArray(usluga)[0].sazetakPitanja | uppercase}}</p>
       </div>
-      <mat-action-row>
+        <mat-action-row>
           <a [routerLink]="['/Admin', 'pregledUsluge', asKorisnikUsluga(usluga)._id, usluga._id]"  ><span>Pregledaj uslugu</span> <mat-icon>double_arrow</mat-icon> </a>
-      </mat-action-row>
+        </mat-action-row>
    </mat-expansion-panel>
  </mat-accordion>
  <ng-template #na>

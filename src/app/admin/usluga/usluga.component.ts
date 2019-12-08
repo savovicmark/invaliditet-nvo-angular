@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { Korisnik } from 'src/app/Models/korisnik.model';
 import { UslugaModel } from 'src/app/Models/usluga.model';
 import { selectUslugaId, selectKorisnikId } from 'src/app/main/main.reducers';
-import { switchMap, tap, take } from 'rxjs/operators';
+import { switchMap, tap, take, distinctUntilChanged, map, distinctUntilKeyChanged } from 'rxjs/operators';
 import { selectUslugaById, selectKorisnikById } from '../admin.selectors';
 import { GetKorisnikByIdAction, GetAllUslugaForKorisnikAction } from '../admin.actions';
 import { Router } from '@angular/router';
@@ -31,13 +31,11 @@ export class UslugaComponent implements OnInit {
   ngOnInit() {
     this.korisnik$ = this.store.pipe(
       select(selectKorisnikId),
+      distinctUntilChanged(),
       switchMap(korisnikId => this.store.pipe(
         select(selectKorisnikById(korisnikId)),
         tap(korisnik => {
-          if (!korisnik) {
-            // console.log(`dispatching usluga ${korisnikId}`);
             this.store.dispatch(new GetAllUslugaForKorisnikAction({korisnikId}));
-          }
         }),
         tap(korisnik => {
           if (!korisnik) {
@@ -50,6 +48,7 @@ export class UslugaComponent implements OnInit {
 
     this.usluga$ = this.store.pipe(
       select(selectUslugaId),
+      distinctUntilChanged(),
       switchMap(uslugaId => this.store.pipe(
         select(selectUslugaById(uslugaId))
         ))
